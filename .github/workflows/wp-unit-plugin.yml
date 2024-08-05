@@ -81,13 +81,13 @@ jobs:
 
       - name: Import MySQL Dump
         run: |
-          unzip -p public-actions/plugins/config/wp-unit.sql.zip | mysql -u root -proot wp-unit
+          unzip -p public-actions/resources/plugins/config/wp-unit.sql.zip | mysql -u root -proot wp-unit
 
       - name: Install WP-Unit
         uses: lipemat/public-actions/install-wp-unit@master
 
       - name: Add WP-Unit Config
-        run: cp public-actions/plugins/config/wp-unit-local-config.php content/plugins/${{ inputs.PRO }}/dev/wp-unit/local-config.php
+        run: cp public-actions/resources/plugins/config/wp-unit-local-config.php content/plugins/${{ inputs.PRO }}/dev/wp-unit/local-config.php
 
 
 
