@@ -1,0 +1,51 @@
+###################################################
+# Install and cache the wp-unit dependency in a resuable action.
+#
+# Ideally:
+# 1. Master installs and caches the wp-unit dependency.
+# 2. Pull can reuse the cached wp-unit dependency.
+#
+# @version 0.0.3
+#
+###################################################
+
+name: Install WP-Unit
+description: Install WP-Unit and its dependencies.
+
+runs:
+  using: "composite"
+  steps:
+    - name: Restore WP-Unit from Cache
+      uses: actions/cache/restore@v4
+      id: restore-wp-unit
+      with:
+        path: |
+          wp-unit
+          dev/wp-unit/.phpunit.cache
+        key: wp-unit-${{ env.WP_UNIT_VERSION }}
+        restore-keys: wp-unit-${{ env.WP_UNIT_VERSION }}
+
+    - if: ${{ steps.restore-wp-unit.outputs.cache-hit != 'true' }}
+      name: Install WP-Unit
+      uses: actions/checkout@v4
+      with:
+        repository: lipemat/wp-unit
+        path: wp-unit
+        ref: ${{ env.WP_UNIT_VERSION }}
+        show-progress: false
+
+    - if: ${{ steps.restore-wp-unit.outputs.cache-hit != 'true' }}
+      name: Install WP-Unit Dependencies
+      run: composer install --working-dir wp-unit --no-scripts
+      shell: bash
+
+    # Only save the cache on the master branch.
+    - if: ${{ github.ref == 'refs/heads/master' }}
+      name: Save WP-Unit to Cache
+      uses: actions/cache/save@v4
+      id: cache-wp-unit
+      with:
+        path: |
+          wp-unit
+          dev/wp-unit/.phpunit.cache
+        key: ${{ steps.restore-wp-unit.outputs.cache-primary-key }}

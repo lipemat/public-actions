@@ -43,7 +43,7 @@ jobs:
           path: public-actions
 
       - name: Setup Node and PHP
-        uses: lipemat/actions/setup-dependencies@master
+        uses: lipemat/public-actions/setup-dependencies@master
         env:
           NODE_VERSION: 20.11.0
           PHP_VERSION: ${{ inputs.php }}
@@ -58,7 +58,7 @@ jobs:
           unzip -p public-actions/plugins/config/wp-unit.sql.zip | mysql -u root -proot wp-unit
 
       - name: Install WP-Unit
-        uses: lipemat/actions/install-wp-unit@master
+        uses: lipemat/public-actions/install-wp-unit@master
 
       - name: Add WP-Unit Config
         run: cp public-actions/plugins/config/wp-unit-local-config.php ${{ env.DIR }}/dev/wp-unit/local-config.php
