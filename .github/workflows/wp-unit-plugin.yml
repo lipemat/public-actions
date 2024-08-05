@@ -40,14 +40,16 @@ jobs:
           repository: lipemat/${{ inputs.PRO }}
           path: content/plugins/${{ inputs.PRO }}
           token: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
-          # TODO: Switch to develop branch when ready!!
-          ref: feature/github-testing
+          # Optional - Override the master branch using a GitHub Action variable.
+          ref: ${{ vars.PRO_BRANCH }}
 
       - name: Checkout the basic plugin
         uses: actions/checkout@v4
         with:
           repository: lipemat/${{ inputs.BASIC }}
           path: content/plugins/${{ inputs.BASIC }}
+          # Optional - Override the master branch using a GitHub Action variable.
+          ref: ${{ vars.BASIC_BRANCH }}
 
       - name: Checkout the public-actions repository
         uses: actions/checkout@v4
