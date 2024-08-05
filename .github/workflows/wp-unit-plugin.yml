@@ -2,6 +2,7 @@ name: WP Unit - Plugin
 
 env:
   VERSION: 1.0.0
+  DIR: content/plugins/${{ inputs.PRO }}
 
 on:
   workflow_call:
@@ -19,9 +20,6 @@ on:
         required: true
         type: string
       BASIC:
-        required: true
-        type: string
-      DIR:
         required: true
         type: string
 
@@ -74,13 +72,13 @@ jobs:
         uses: lipemat/public-actions/install-wp-unit@master
 
       - name: Add WP-Unit Config
-        run: cp public-actions/plugins/config/wp-unit-local-config.php ${{ inputs.DIR }}/dev/wp-unit/local-config.php
+        run: cp public-actions/plugins/config/wp-unit-local-config.php content/plugins/${{ inputs.PRO }}/dev/wp-unit/local-config.php
 
 
 
       - name: Install Translations Dependencies
         run: |
-          cd ${{ inputs.DIR }}/dev/translate-cli
+          cd ${{ env.DIR }}/dev/translate-cli
           composer install
         shell: bash
 
@@ -92,21 +90,14 @@ jobs:
 
       - name: Generate JS translations
         run: |
-          cd ${{ inputs.DIR }}/dev/translate-cli
+          cd ${{ env.DIR }}/dev/translate-cli
           php command.php
         shell: bash
 
       - name: Generate PHP translations
         run: |
-          cd ${{ inputs.DIR }}/languages
+          cd ${{ env.DIR }}/languages
           wp i18n make-php .
-        shell: bash
-
-      - name: Build Dist files
-        run: |
-          export NODE_ENV=production
-          cd ${{ inputs.DIR }}
-          yarn dist
         shell: bash
 
 
@@ -116,7 +107,7 @@ jobs:
           MULTISITE: ${{ inputs.multisite }}
         run: |
           if [ $(echo "${{ inputs.php }} < 8.1" | bc) -eq 1 ]; then
-            php wp-unit/vendor/bin/phpunit --configuration ${{ inputs.DIR }}/dev/wp-unit/phpunit-legacy.xml.dist --bootstrap="${{ inputs.DIR }}/dev/wp-unit/bootstrap.php"
+            php wp-unit/vendor/bin/phpunit --configuration ${{ env.DIR }}/dev/wp-unit/phpunit-legacy.xml.dist --bootstrap="${{ env.DIR }}/dev/wp-unit/bootstrap.php"
           else
-            php wp-unit/vendor/bin/phpunit --configuration ${{ inputs.DIR }}/dev/wp-unit/phpunit.xml.dist
+            php wp-unit/vendor/bin/phpunit --configuration ${{ env.DIR }}/dev/wp-unit/phpunit.xml.dist
           fi
