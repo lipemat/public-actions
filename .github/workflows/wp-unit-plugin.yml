@@ -1,18 +1,33 @@
 ###################################################
 # A reusable workflow for running WP-Unit tests on a plugin.
 #
+# Variables must be set in the calling repository.
+# vars:
+#   BASIC_BRANCH: The branch of the basic plugin.
+#   PRO_BRANCH: The branch of the pro plugin.
+#   WP_UNIT_VERSION: The version of WP-Unit to install.
+# secrets:
+#   PUBLIC_ACTIONS_PRO_REPO: The token to access the pro repository.
+# inputs:
+#   basic: The basic plugin slug.
+#   multisite: The type of multisite to test.
+#   php: The PHP version to use.
+#   pro: The pro plugin slug.
+#   wp: The version of WordPress to test.
+#
 ###################################################
 
 name: WP Unit - Plugin
 
 env:
-  VERSION: 1.0.0
+  VERSION: 1.1.0
+  BASIC: ${{ inputs.basic }}
+  BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: content/plugins/${{ inputs.pro }}
   PRO: ${{ inputs.pro }}
-  BASIC: ${{ inputs.basic }}
-  TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
-  BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
+  TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
+  WP_UNIT_VERSION: ${{ vars.WP_UNIT_VERSION }}
 
 on:
   workflow_call:

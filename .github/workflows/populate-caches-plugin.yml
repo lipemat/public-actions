@@ -1,0 +1,52 @@
+###################################################
+# Install and cache the dependencies when `master` is pushed
+# for other workflows to use.
+#
+# Most workflows will reuse the same cached
+# dependencies as the last release. Having master populate the
+# cache makes them accessible to all pull requests and deployments.
+#
+# Variables must be set in the calling repository.
+# https://github.com/lipemat/<plugin>/settings/variables/actions
+# vars:
+#   NODE_VERSION: The version of Node to install.
+#   PHPCS_VERSION: The version of PHPCS to install.
+#   PHPSTAN_VERSION: The version of PHPStan to install.
+#   PHP_VERSION: The version of PHP to install.
+#   WP_UNIT_VERSION: The version of WP-Unit to install.
+#
+# @version 1.1.0
+#
+###################################################
+
+name: Populate Caches - Plugin
+env:
+  NODE_VERSION: ${{ vars.NODE_VERSION }}
+  PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
+  PHPSTAN_VERSION: ${{ vars.PHPSTAN_VERSION }}
+  PHP_VERSION: ${{ vars.PHP_VERSION }}
+  WP_UNIT_VERSION: ${{ vars.WP_UNIT_VERSION }}
+
+on:
+  workflow_call:
+
+
+jobs:
+  populate:
+    name: Populate all caches
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node and PHP
+        uses: lipemat/public-actions/setup-dependencies@master
+
+      - name: Populate WP-Unit Cache
+        uses: lipemat/public-actions/install-wp-unit@master
+
+      - name: Populate PHPStan Cache
+        uses: lipemat/public-actions/install-phpstan@master
+
+      - name: Populate PHPCS Cache
+        uses: lipemat/public-actions/install-phpcs@master
