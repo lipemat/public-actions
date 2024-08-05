@@ -12,7 +12,7 @@ env:
   TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
-  STUBS_VERSION: ${{ inputs.wp }}
+  STUBS_VERSION: ${{ inputs.stubs }}
 
 on:
   workflow_call:
