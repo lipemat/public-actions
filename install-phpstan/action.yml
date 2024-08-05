@@ -1,11 +1,17 @@
 ###################################################
-# Install and cache the phpstan dependency in a resuable action.
+# Install and cache the phpstan dependency in a reusable action.
 #
 # Ideally:
 # 1. Master installs and caches the phpstan dependency.
 # 2. Pull can reuse the cached phpstan dependency.
 #
-# @version 0.0.2
+# env:
+#   PHPSTAN_VERSION: Version of lipemat/phpstan-wordpress to install.
+#                    - Typically set via repository variables on GitHub.
+#   STUBS_VERSION: Optional version of php-stubs/wordpress-stubs to install.
+#                  - Defaults to the latest version.
+#
+# @version 0.0.3
 #
 ###################################################
 
@@ -22,8 +28,8 @@ runs:
         path: |
           phpstan
           /tmp/phpstan
-        key: phpstan-${{ env.PHPSTAN_VERSION }}
-        restore-keys: phpstan-${{ env.PHPSTAN_VERSION }}
+        key: phpstan-${{ env.PHPSTAN_VERSION }}-${{ env.STUBS_VERSION }}
+        restore-keys: phpstan-${{ env.PHPSTAN_VERSION }}-${{ env.STUBS_VERSION }}
 
     - if: ${{ steps.restore-phpstan.outputs.cache-hit != 'true' }}
       name: Install PHPStan
@@ -35,8 +41,12 @@ runs:
 
     - if: ${{ steps.restore-phpstan.outputs.cache-hit != 'true' }}
       name: Install PHPStan Dependencies
+      run: composer install --working-dir=phpstan
+      shell: bash
+
+    - if: ${{ env.STUBS_VERSION != '' }}
+      name: Install WordPress stubs as version ${{ env.STUBS_VERSION }}
       run: |
-        composer install --working-dir=phpstan
         composer require --dev php-stubs/wordpress-stubs:${{ env.STUBS_VERSION }} --working-dir=phpstan
       shell: bash
 

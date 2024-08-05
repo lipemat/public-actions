@@ -7,12 +7,13 @@ name: PHPStan - Plugin
 
 env:
   VERSION: 0.0.2
-  PRO: ${{ inputs.pro }}
   BASIC: ${{ inputs.basic }}
-  TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
-  PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
+  PHPSTAN_VERSION: ${{ vars.PHPSTAN_VERSION }}
+  PRO: ${{ inputs.pro }}
+  PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   STUBS_VERSION: ${{ inputs.stubs }}
+  TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
 
 on:
   workflow_call:
@@ -49,6 +50,8 @@ jobs:
 
       - name: Install PHPStan
         uses: lipemat/public-actions/install-phpstan@master
+        env:
+          PHPSTAN_VERSION: ${{ vars.PHPSTAN_VERSION }}
 
       - name: Run PHPStan
         run: |
