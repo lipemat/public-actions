@@ -7,6 +7,8 @@
 
 name: Lint PHP
 
+env:
+  VERSION: 0.0.1
 
 on:
   workflow_call:

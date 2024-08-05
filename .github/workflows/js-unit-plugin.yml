@@ -1,0 +1,36 @@
+###################################################
+# A reusable workflow for running JS Unit on a plugin.
+#
+# Variables must be set in the calling repository.
+# vars:
+#   NODE_VERSION: The version of Node to install.
+#   PHPCS_VERSION: Version of `lipemat/wp-phpcs` to install.
+#
+###################################################
+
+name: JS Unit - Plugin
+
+env:
+  VERSION: 0.0.1
+  NODE_VERSION: ${{ vars.NODE_VERSION }}
+
+on:
+  workflow_call:
+
+jobs:
+  JS-Unit:
+    name: Run JS Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the plugin
+        uses: actions/checkout@v4
+
+      - name: Setup Node and PHP
+        uses: lipemat/public-actions/setup-dependencies@master
+
+      - name: Validate CSS Modules
+        run: yarn lipemat-js-boilerplate validate-css-modules
+
+      - name: Run JS Tests
+        run: yarn test
+        shell: bash
