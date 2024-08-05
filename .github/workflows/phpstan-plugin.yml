@@ -1,6 +1,22 @@
 ###################################################
 # A reusable workflow for running PHPStan on a plugin.
 #
+# Variables must be set in the calling repository.
+# vars:
+#   BASIC_BRANCH: The branch of the basic plugin.
+#   PHPSTAN_VERSION: The version of PHPStan to install.
+#   PRO_BRANCH: The branch of the pro plugin.
+# secrets:
+#   PUBLIC_ACTIONS_PRO_REPO: The token to access the pro repository.
+# inputs:
+#   basic: The basic plugin slug.
+#   dir: The directory of the plugin.
+#   php: The PHP version to use.
+#   pro: The pro plugin slug.
+#   stubs: The version of the `lipemat/phpstan-wordpress` to install.
+#
+# @version 0.0.2
+#
 ###################################################
 
 name: PHPStan - Plugin
