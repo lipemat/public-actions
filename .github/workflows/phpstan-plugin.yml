@@ -8,8 +8,8 @@ name: PHPStan - Plugin
 env:
   VERSION: 0.0.2
   PHPSTAN_VERSION: ${{ inputs.wp }}
-  PRO: ${{ inputs.PRO }}
-  BASIC: ${{ inputs.BASIC }}
+  PRO: ${{ inputs.pro }}
+  BASIC: ${{ inputs.basic }}
   TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
@@ -17,20 +17,20 @@ env:
 on:
   workflow_call:
     inputs:
-      wp:
+      basic:
         required: true
+        type: string
+      dir:
+        required: false
         type: string
       php:
         required: true
         type: string
-      PRO:
+      pro:
         required: true
         type: string
-      BASIC:
+      wp:
         required: true
-        type: string
-      DIR:
-        required: false
         type: string
 
 jobs:
@@ -52,4 +52,4 @@ jobs:
 
       - name: Run PHPStan
         run: |
-          php phpstan/vendor/bin/phpstan analyze --configuration=${{ inputs.DIR }}/phpstan.neon.dist --memory-limit=2G --no-progress --error-format=checkstyle | cs2pr
+          php phpstan/vendor/bin/phpstan analyze --configuration=${{ inputs.dir }}/phpstan.neon.dist --memory-limit=2G --no-progress --error-format=checkstyle | cs2pr

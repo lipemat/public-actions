@@ -7,9 +7,9 @@ name: WP Unit - Plugin
 
 env:
   VERSION: 1.0.0
-  DIR: content/plugins/${{ inputs.PRO }}
-  PRO: ${{ inputs.PRO }}
-  BASIC: ${{ inputs.BASIC }}
+  DIR: content/plugins/${{ inputs.pro }}
+  PRO: ${{ inputs.pro }}
+  BASIC: ${{ inputs.basic }}
   TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
@@ -17,19 +17,19 @@ env:
 on:
   workflow_call:
     inputs:
-      wp:
-        required: true
-        type: string
-      php:
+      basic:
         required: true
         type: string
       multisite:
         required: true
         type: string
-      PRO:
+      php:
         required: true
         type: string
-      BASIC:
+      pro:
+        required: true
+        type: string
+      wp:
         required: true
         type: string
 
@@ -72,7 +72,7 @@ jobs:
         uses: lipemat/public-actions/install-wp-unit@master
 
       - name: Add WP-Unit Config
-        run: cp public-actions/resources/plugins/config/wp-unit-local-config.php content/plugins/${{ inputs.PRO }}/dev/wp-unit/local-config.php
+        run: cp public-actions/resources/plugins/config/wp-unit-local-config.php content/plugins/${{ inputs.pro }}/dev/wp-unit/local-config.php
 
 
 
