@@ -36,7 +36,7 @@ on:
         required: true
         type: string
       dir:
-        required: false
+        required: true
         type: string
       php:
         required: true

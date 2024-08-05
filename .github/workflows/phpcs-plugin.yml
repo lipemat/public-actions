@@ -5,18 +5,20 @@
 # vars:
 #   PHPCS_VERSION: Version of `lipemat/wp-phpcs` to install.
 #
-# @version 0.0.2
-#
 ###################################################
 
 name: PHPCS - Plugin
 
 env:
-  VERSION: 0.0.2
+  VERSION: 0.0.3
   PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
 
 on:
   workflow_call:
+    inputs:
+      dir:
+        required: true
+        type: string
 
 jobs:
   phpcs:
@@ -25,6 +27,8 @@ jobs:
     steps:
       - name: Checkout the plugin
         uses: actions/checkout@v4
+        with:
+          path: ${{ inputs.dir }}
 
       - name: Setup Node and PHP
         uses: lipemat/public-actions/setup-dependencies@master
@@ -33,5 +37,4 @@ jobs:
         uses: lipemat/public-actions/install-phpcs@master
 
       - name: Run PHPCS
-        run: phpcs/vendor/bin/phpcs
-        timeout-minutes: 20
+        run: phpcs/vendor/bin/phpcs --standard=${{ inputs.dir }}/phpcs.xml.dist  -q --report=checkstyle | cs2pr
