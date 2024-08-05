@@ -1,5 +1,5 @@
 ###################################################
-# Install and cache the wp-unit dependency in a resuable action.
+# Install and cache the wp-unit dependency in a reusable action.
 #
 # Ideally:
 # 1. Master installs and caches the wp-unit dependency.
