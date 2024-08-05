@@ -1,61 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="FormatOnSaveOptions">
-    <option name="myRunOnSave" value="true" />
-    <option name="myAllFileTypesSelected" value="false" />
-    <option name="mySelectedFileTypes">
-      <set>
-        <option value="ActionScript" />
-        <option value="CSS" />
-        <option value="CSV" />
-        <option value="CassandraQL" />
-        <option value="DTD" />
-        <option value="ECMAScript 6" />
-        <option value="EditorConfig" />
-        <option value="Flow" />
-        <option value="HTML" />
-        <option value="HTTP Request" />
-        <option value="HiveQL" />
-        <option value="Ini" />
-        <option value="JSHint" />
-        <option value="JSON" />
-        <option value="JSON-lines" />
-        <option value="JSON5" />
-        <option value="JSX Harmony" />
-        <option value="JavaScript" />
-        <option value="Less" />
-        <option value="Mermaid" />
-        <option value="PHP" />
-        <option value="PSV" />
-        <option value="PostCSS" />
-        <option value="RNG Compact" />
-        <option value="Redis" />
-        <option value="SCSS" />
-        <option value="SQL" />
-        <option value="SVG" />
-        <option value="Sass" />
-        <option value="Shell Script" />
-        <option value="Smarty" />
-        <option value="SourceMap" />
-        <option value="Svelte" />
-        <option value="TSV" />
-        <option value="TypeScript" />
-        <option value="TypeScript JSX" />
-        <option value="XHTML" />
-        <option value="XML" />
-        <option value="tsconfig" />
-      </set>
-    </option>
-  </component>
   <component name="JsBuildToolPackageJson" sorting="DEFINITION_ORDER" />
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
-  </component>
-  <component name="PhpAnalysisConfiguration">
-    <unchecked_exceptions>
-      <fqn value="\" />
-      <fqn value="\PHPUnit\Framework\Exception" />
-    </unchecked_exceptions>
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project">

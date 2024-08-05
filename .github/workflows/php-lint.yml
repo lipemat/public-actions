@@ -1,0 +1,31 @@
+###################################################
+# Lint PHP files in the repository
+#
+# @version 0.0.1
+#
+###################################################
+
+name: Lint PHP
+
+
+on:
+  workflow_call:
+    inputs:
+      php:
+        required: true
+        type: string
+
+jobs:
+  php-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the files
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ inputs.php }}
+
+      - name: Lint PHP
+        run: php -l -d ${{ github.workspace }}
