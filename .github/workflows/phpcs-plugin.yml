@@ -1,0 +1,36 @@
+###################################################
+# A reusable workflow for running PHPStan on a plugin.
+#
+# Variables must be set in the calling repository.
+# vars:
+#   PHPCS_VERSION: Version of `lipemat/wp-phpcs` to install.
+#
+# @version 0.0.2
+#
+###################################################
+
+name: PHPCS - Plugin
+
+env:
+  VERSION: 0.0.2
+  PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
+
+on:
+  workflow_call:
+
+jobs:
+  phpcs:
+    name: PHPCS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the plugin
+        uses: actions/checkout@v4
+
+      - name: Setup Node and PHP
+        uses: lipemat/public-actions/setup-dependencies@master
+
+      - name: Install PHPCS
+        uses: lipemat/public-actions/install-phpcs@master
+
+      - name: Run PHPCS
+        run: phpcs/vendor/bin/phpcs -q --report=checkstyle | cs2pr

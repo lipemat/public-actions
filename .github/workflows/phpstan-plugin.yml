@@ -15,8 +15,6 @@
 #   pro: The pro plugin slug.
 #   stubs: The version of the `lipemat/phpstan-wordpress` to install.
 #
-# @version 0.0.2
-#
 ###################################################
 
 name: PHPStan - Plugin

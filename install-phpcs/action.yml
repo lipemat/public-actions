@@ -1,0 +1,55 @@
+###################################################
+# Install and cache the phpcs dependency in a resuable action.
+#
+# Ideally:
+# 1. Master installs and caches the phpcs dependency.
+# 2. Pull can reuse the cached phpcs dependency.
+#
+# env:
+#    PHPCS_VERSION: Version of lipemat/wp-phpcs to install.
+#                   - Typically set via repository variables on GitHub.
+#
+# @version 0.0.2
+#
+###################################################
+
+name: Install PHPCS
+description: Install PHPCS and its dependencies.
+
+runs:
+  using: "composite"
+  steps:
+    - name: Restore PHPCS from Cache
+      uses: actions/cache/restore@v4
+      id: restore-phpcs
+      with:
+        path: |
+          phpcs
+          .phpcs.cache
+        key: phpcs-${{ env.PHPCS_VERSION }}
+        restore-keys: phpcs-${{ env.PHPCS_VERSION }}
+
+    - if: ${{ steps.restore-phpcs.outputs.cache-hit != 'true' }}
+      name: Install PHPCS
+      uses: actions/checkout@v4
+      with:
+        repository: lipemat/wp-phpcs
+        path: phpcs
+        ref: ${{ env.PHPCS_VERSION }}
+        show-progress: false
+
+    - if: ${{ steps.restore-phpcs.outputs.cache-hit != 'true' }}
+      name: Install PHPCS Dependencies
+      run: composer install --working-dir=phpcs
+      shell: bash
+
+    # Only save the cache on the master branch.
+    - if: ${{ github.ref == 'refs/heads/master' }}
+      name: Save PHPCS to Cache
+      uses: actions/cache/save@v4
+      id: cache-phpcs
+      with:
+        path: |
+          phpcs
+          .phpcs.cache
+        key: ${{ steps.restore-phpcs.outputs.cache-primary-key }}
