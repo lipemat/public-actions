@@ -52,6 +52,7 @@ jobs:
       - name: Checkout the public-actions repository
         uses: actions/checkout@v4
         with:
+          repository: lipemat/public-actions
           path: public-actions
 
       - name: Setup Node and PHP
