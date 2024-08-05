@@ -45,8 +45,5 @@ jobs:
       - name: Populate WP-Unit Cache
         uses: lipemat/public-actions/install-wp-unit@master
 
-      - name: Populate PHPStan Cache
-        uses: lipemat/public-actions/install-phpstan@master
-
       - name: Populate PHPCS Cache
         uses: lipemat/public-actions/install-phpcs@master
