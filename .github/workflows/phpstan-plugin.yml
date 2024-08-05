@@ -7,12 +7,12 @@ name: PHPStan - Plugin
 
 env:
   VERSION: 0.0.2
-  PHPSTAN_VERSION: ${{ inputs.wp }}
   PRO: ${{ inputs.pro }}
   BASIC: ${{ inputs.basic }}
   TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
+  WP: ${{ inputs.wp }}
 
 on:
   workflow_call:

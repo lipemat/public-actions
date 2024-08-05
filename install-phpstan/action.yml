@@ -31,12 +31,13 @@ runs:
       with:
         repository: lipemat/phpstan-wordpress
         path: phpstan
-        ref: ${{ env.PHPSTAN_VERSION }}
         show-progress: false
 
     - if: ${{ steps.restore-phpstan.outputs.cache-hit != 'true' }}
       name: Install PHPStan Dependencies
-      run: composer install --working-dir=phpstan
+      run: |
+        composer install --working-dir=phpstan
+        composer require php-stubs/wordpress-stubs:${{ env.WP }} --working-dir=phpstan
       shell: bash
 
     # Make required directory to support loading `..lipemat/actions/..lipemat/actions/..lipemat/actions/extensions.neon`.
