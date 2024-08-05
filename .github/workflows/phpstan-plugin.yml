@@ -20,9 +20,10 @@
 name: PHPStan - Plugin
 
 env:
-  VERSION: 0.0.2
+  VERSION: 0.0.3
   BASIC: ${{ inputs.basic }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
+  NODE_VERSION: ${{ vars.NODE_VERSION }}
   PHPSTAN_VERSION: ${{ vars.PHPSTAN_VERSION }}
   PRO: ${{ inputs.pro }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
@@ -59,7 +60,7 @@ jobs:
       - name: Setup Node and PHP
         uses: lipemat/public-actions/setup-dependencies@master
         env:
-          NODE_VERSION: 20.11.0
+          NODE_VERSION: ${{ env.NODE_VERSION }}
           PHP_VERSION: ${{ inputs.php }}
 
       - name: Install PHPStan
