@@ -1,0 +1,54 @@
+###################################################
+# A reusable workflow for running PHPStan on a plugin.
+#
+###################################################
+
+name: PHPStan - Plugin
+
+env:
+  VERSION: 0.0.1
+  DIR: content/plugins/${{ inputs.PRO }}
+  PHPSTAN_VERSION: ${{ inputs.wp }}
+
+on:
+  workflow_call:
+    inputs:
+      wp:
+        required: true
+        type: string
+      php:
+        required: true
+        type: string
+      PRO:
+        required: true
+        type: string
+      BASIC:
+        required: true
+        type: string
+      DIR:
+        required: false
+        type: string
+
+jobs:
+  phpstan:
+    name: PHPStan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the PRO and BASIC plugins
+        uses: lipemat/public-actions/checkout-plugins@master
+        with:
+          PRO: ${{ inputs.PRO }}
+          BASIC: ${{ inputs.BASIC }}
+
+      - name: Setup Node and PHP
+        uses: lipemat/public-actions/setup-dependencies@master
+        env:
+          NODE_VERSION: 20.11.0
+          PHP_VERSION: ${{ inputs.php }}
+
+      - name: Install PHPStan
+        uses: lipemat/public-actions/install-phpstan@master
+
+      - name: Run PHPStan
+        run: |
+          php phpstan/vendor/bin/phpstan analyze --configuration=${{ inputs.DIR }}/phpstan.neon.dist --memory-limit=2G --no-progress --error-format=checkstyle | cs2pr
