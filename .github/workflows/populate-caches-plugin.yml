@@ -15,12 +15,11 @@
 #   PHP_VERSION: The version of PHP to install.
 #   WP_UNIT_VERSION: The version of WP-Unit to install.
 #
-# @version 1.1.0
-#
 ###################################################
 
 name: Populate Caches - Plugin
 env:
+  VERSION: 1.1.0
   NODE_VERSION: ${{ vars.NODE_VERSION }}
   PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
   PHPSTAN_VERSION: ${{ vars.PHPSTAN_VERSION }}
