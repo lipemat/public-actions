@@ -6,9 +6,13 @@
 name: PHPStan - Plugin
 
 env:
-  VERSION: 0.0.1
-  DIR: content/plugins/${{ inputs.PRO }}
+  VERSION: 0.0.2
   PHPSTAN_VERSION: ${{ inputs.wp }}
+  PRO: ${{ inputs.PRO }}
+  BASIC: ${{ inputs.BASIC }}
+  TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
+  PRO_BRANCH: ${{ vars.PRO_BRANCH }}
+  BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
 
 on:
   workflow_call:
@@ -36,9 +40,6 @@ jobs:
     steps:
       - name: Checkout the PRO and BASIC plugins
         uses: lipemat/public-actions/checkout-plugins@master
-        with:
-          PRO: ${{ inputs.PRO }}
-          BASIC: ${{ inputs.BASIC }}
 
       - name: Setup Node and PHP
         uses: lipemat/public-actions/setup-dependencies@master

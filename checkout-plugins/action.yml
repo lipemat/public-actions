@@ -20,16 +20,16 @@ runs:
     - name: Checkout the PRO plugin
       uses: actions/checkout@v4
       with:
-        repository: lipemat/${{ inputs.PRO }}
-        path: content/plugins/${{ inputs.PRO }}
-        token: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
+        repository: lipemat/${{ env.PRO }}
+        path: content/plugins/${{ env.PRO }}
+        token: ${{ env.TOKEN }}
         # Optional - Override the master branch using a GitHub Action variable.
-        ref: ${{ vars.PRO_BRANCH }}
+        ref: ${{ env.PRO_BRANCH }}
 
     - name: Checkout the basic plugin
       uses: actions/checkout@v4
       with:
-        repository: lipemat/${{ inputs.BASIC }}
-        path: content/plugins/${{ inputs.BASIC }}
+        repository: lipemat/${{ env.BASIC }}
+        path: content/plugins/${{ env.BASIC }}
         # Optional - Override the master branch using a GitHub Action variable.
-        ref: ${{ vars.BASIC_BRANCH }}
+        ref: ${{ env.BASIC_BRANCH }}
