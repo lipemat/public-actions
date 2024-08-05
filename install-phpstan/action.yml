@@ -37,7 +37,7 @@ runs:
       name: Install PHPStan Dependencies
       run: |
         composer install --working-dir=phpstan
-        composer require --dev php-stubs/wordpress-stubs:${{ env.WP }} --working-dir=phpstan
+        composer require --dev php-stubs/wordpress-stubs:${{ env.STUBS_VERSION }} --working-dir=phpstan
       shell: bash
 
     # Make required directory to support loading `..lipemat/actions/..lipemat/actions/..lipemat/actions/extensions.neon`.
