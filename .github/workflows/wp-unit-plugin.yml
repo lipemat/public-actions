@@ -1,12 +1,6 @@
 ###################################################
 # A reusable workflow for running WP-Unit tests on a plugin.
 #
-# Secrets must be set in the calling repository.
-# - PUBLIC_ACTIONS_PRO_REPO: A personal access token with access to the PRO plugin repository.
-#
-# Token shared by all 4 plugins.
-# https://github.com/settings/personal-access-tokens/3757667
-#
 ###################################################
 
 name: WP Unit - Plugin
@@ -45,22 +39,11 @@ jobs:
           path: wp
           ref: ${{ inputs.wp }}
 
-      - name: Checkout the PRO plugin
-        uses: actions/checkout@v4
+      - name: Checkout the PRO and BASIC plugins
+        uses: lipemat/public-actions/checkout-plugins@master
         with:
-          repository: lipemat/${{ inputs.PRO }}
-          path: content/plugins/${{ inputs.PRO }}
-          token: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
-          # Optional - Override the master branch using a GitHub Action variable.
-          ref: ${{ vars.PRO_BRANCH }}
-
-      - name: Checkout the basic plugin
-        uses: actions/checkout@v4
-        with:
-          repository: lipemat/${{ inputs.BASIC }}
-          path: content/plugins/${{ inputs.BASIC }}
-          # Optional - Override the master branch using a GitHub Action variable.
-          ref: ${{ vars.BASIC_BRANCH }}
+          PRO: ${{ inputs.PRO }}
+          BASIC: ${{ inputs.BASIC }}
 
       - name: Checkout the public-actions repository
         uses: actions/checkout@v4
