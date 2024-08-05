@@ -1,0 +1,109 @@
+name: WP Unit - Plugin
+
+on:
+  workflow_call:
+    inputs:
+      wp:
+        required: true
+        type: string
+      php:
+        required: true
+        type: string
+      multisite:
+        required: true
+        type: string
+
+jobs:
+  wp-unit:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout WordPress Core
+        uses: actions/checkout@v4
+        with:
+          repository: wordpress/wordpress
+          path: wp
+          ref: ${{ inputs.wp }}
+
+      - name: Checkout the PRO plugin
+        uses: actions/checkout@v4
+        with:
+          repository: lipemat/${{ env.PRO }}
+          path: content/plugins/${{ env.PRO }}
+          token: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
+
+      - name: Checkout the basic plugin
+        uses: actions/checkout@v4
+        with:
+          repository: lipemat/${{ env.BASIC }}
+          path: content/plugins/${{ env.BASIC }}
+
+      - name: Checkout the public-actions repository
+        uses: actions/checkout@v4
+        with:
+          path: public-actions
+
+      - name: Setup Node and PHP
+        uses: lipemat/actions/setup-dependencies@master
+        env:
+          NODE_VERSION: 20.11.0
+          PHP_VERSION: ${{ inputs.php }}
+
+      - name: Set up MySQL
+        run: |
+          sudo /etc/init.d/mysql start
+          mysql -e 'CREATE DATABASE `wp-unit`;' -u root -proot    
+
+      - name: Import MySQL Dump
+        run: |
+          unzip -p public-actions/plugins/config/wp-unit.sql.zip | mysql -u root -proot wp-unit
+
+      - name: Install WP-Unit
+        uses: lipemat/actions/install-wp-unit@master
+
+      - name: Add WP-Unit Config
+        run: cp public-actions/plugins/config/wp-unit-local-config.php ${{ env.DIR }}/dev/wp-unit/local-config.php
+
+
+
+      - name: Install Translations Dependencies
+        run: |
+          cd ${{ env.DIR }}/dev/translate-cli
+          composer install
+        shell: bash
+
+      - name: Install WP-CLI
+        run: |
+          curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+          chmod +x wp-cli.phar
+          sudo mv wp-cli.phar /usr/local/bin/wp  
+
+      - name: Generate JS translations
+        run: |
+          cd ${{ env.DIR }}/dev/translate-cli
+          php command.php
+        shell: bash
+
+      - name: Generate PHP translations
+        run: |
+          cd ${{ env.DIR }}/languages
+          wp i18n make-php .
+        shell: bash
+
+      - name: Build Dist files
+        run: |
+          export NODE_ENV=production
+          cd ${{ env.DIR }}
+          yarn dist
+        shell: bash
+
+
+
+      - name: Run WP-Unit
+        env:
+          MULTISITE: ${{ inputs.multisite }}
+        run: |
+          if [ $(echo "${{ inputs.php }} < 8.1" | bc) -eq 1 ]; then
+            php wp-unit/vendor/bin/phpunit --configuration ${{ env.DIR }}/dev/wp-unit/phpunit-legacy.xml.dist --bootstrap="${{ env.DIR }}/dev/wp-unit/bootstrap.php"
+          else
+            php wp-unit/vendor/bin/phpunit --configuration ${{ env.DIR }}/dev/wp-unit/phpunit.xml.dist
+          fi
