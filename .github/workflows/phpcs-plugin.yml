@@ -33,4 +33,5 @@ jobs:
         uses: lipemat/public-actions/install-phpcs@master
 
       - name: Run PHPCS
-        run: phpcs/vendor/bin/phpcs -q --report=checkstyle | cs2pr
+        run: phpcs/vendor/bin/phpcs
+        timeout-minutes: 20
