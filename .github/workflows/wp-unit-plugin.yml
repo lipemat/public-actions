@@ -122,7 +122,7 @@ jobs:
           MULTISITE: ${{ inputs.multisite }}
         run: |
           if [ $(echo "${{ inputs.php }} < 8.1" | bc) -eq 1 ]; then
-            php wp-unit/vendor/bin/phpunit --configuration ${{ env.DIR }}/dev/wp-unit/phpunit-legacy.xml.dist --bootstrap="${{ env.DIR }}/dev/wp-unit/bootstrap.php"
+            php wp-unit/vendor/bin/phpunit --configuration ${{ env.DIR }}/dev/wp-unit/phpunit-legacy.xml.dist"
           else
             php wp-unit/vendor/bin/phpunit --configuration ${{ env.DIR }}/dev/wp-unit/phpunit.xml.dist
           fi
