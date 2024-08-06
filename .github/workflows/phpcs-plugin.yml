@@ -3,6 +3,7 @@
 #
 # Variables must be set in the calling repository.
 # vars:
+#   DIR: The directory of the plugin.
 #   PHPCS_VERSION: Version of `lipemat/wp-phpcs` to install.
 #
 ###################################################
@@ -10,15 +11,11 @@
 name: PHPCS - Plugin
 
 env:
-  VERSION: 0.0.3
+  VERSION: 0.0.4
   PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
 
 on:
   workflow_call:
-    inputs:
-      dir:
-        required: true
-        type: string
 
 jobs:
   phpcs:
@@ -37,4 +34,4 @@ jobs:
         uses: lipemat/public-actions/install-phpcs@master
 
       - name: Run PHPCS
-        run: phpcs/vendor/bin/phpcs --standard=${{ inputs.dir }}/phpcs.xml.dist  -q --report=checkstyle | cs2pr
+        run: phpcs/vendor/bin/phpcs --standard=${{ vars.DIR }}/phpcs.xml.dist  -q --report=checkstyle | cs2pr
