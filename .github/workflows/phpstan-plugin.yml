@@ -3,16 +3,17 @@
 #
 # Variables must be set in the calling repository.
 # vars:
+#   BASIC: The basic plugin slug.
 #   BASIC_BRANCH: The branch of the basic plugin.
+#   DIR: The directory of the plugin.
+#   NODE_VERSION: The version of Node to install.
 #   PHPSTAN_VERSION: The version of PHPStan to install.
+#   PRO: The pro plugin slug.
 #   PRO_BRANCH: The branch of the pro plugin.
 # secrets:
 #   PUBLIC_ACTIONS_PRO_REPO: The token to access the pro repository.
 # inputs:
-#   basic: The basic plugin slug.
-#   dir: The directory of the plugin.
 #   php: The PHP version to use.
-#   pro: The pro plugin slug.
 #   stubs: The version of the `lipemat/phpstan-wordpress` to install.
 #
 ###################################################
@@ -20,12 +21,12 @@
 name: PHPStan - Plugin
 
 env:
-  VERSION: 0.0.3
-  BASIC: ${{ inputs.basic }}
+  VERSION: 0.0.4
+  BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   NODE_VERSION: ${{ vars.NODE_VERSION }}
   PHPSTAN_VERSION: ${{ vars.PHPSTAN_VERSION }}
-  PRO: ${{ inputs.pro }}
+  PRO: ${{ vars.PRO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   STUBS_VERSION: ${{ inputs.stubs }}
   TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
@@ -33,16 +34,7 @@ env:
 on:
   workflow_call:
     inputs:
-      basic:
-        required: true
-        type: string
-      dir:
-        required: true
-        type: string
       php:
-        required: true
-        type: string
-      pro:
         required: true
         type: string
       stubs:
@@ -70,4 +62,4 @@ jobs:
 
       - name: Run PHPStan
         run: |
-          php phpstan/vendor/bin/phpstan analyze --configuration=${{ inputs.dir }}/phpstan.neon.dist --memory-limit=2G --no-progress --error-format=checkstyle | cs2pr
+          php phpstan/vendor/bin/phpstan analyze --configuration=${{ vars.DIR }}/phpstan.neon.dist --memory-limit=2G --no-progress --error-format=checkstyle | cs2pr

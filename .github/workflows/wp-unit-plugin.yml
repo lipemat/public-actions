@@ -3,16 +3,16 @@
 #
 # Variables must be set in the calling repository.
 # vars:
+#   BASIC: The basic plugin slug.
 #   BASIC_BRANCH: The branch of the basic plugin.
+#   DIR: The directory of the plugin.
 #   PRO_BRANCH: The branch of the pro plugin.
 #   WP_UNIT_VERSION: The version of WP-Unit to install.
 # secrets:
 #   PUBLIC_ACTIONS_PRO_REPO: The token to access the pro repository.
 # inputs:
-#   basic: The basic plugin slug.
 #   multisite: The type of multisite to test.
 #   php: The PHP version to use.
-#   pro: The pro plugin slug.
 #   wp: The version of WordPress to test.
 #
 ###################################################
@@ -20,11 +20,11 @@
 name: WP Unit - Plugin
 
 env:
-  VERSION: 1.1.0
-  BASIC: ${{ inputs.basic }}
+  VERSION: 1.2.0
+  BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
-  DIR: content/plugins/${{ inputs.pro }}
-  PRO: ${{ inputs.pro }}
+  DIR: ${{ vars.DIR }}
+  PRO: ${{ vars.PRO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
   WP_UNIT_VERSION: ${{ vars.WP_UNIT_VERSION }}
@@ -32,16 +32,10 @@ env:
 on:
   workflow_call:
     inputs:
-      basic:
-        required: true
-        type: string
       multisite:
         required: true
         type: string
       php:
-        required: true
-        type: string
-      pro:
         required: true
         type: string
       wp:
