@@ -1,0 +1,19 @@
+###################################################
+# Install WP-CLI and make it available in the PATH.
+#
+# @version 0.0.1
+#
+###################################################
+
+name: Install WP-CLI
+description: Install WP-CLI and make it available in the PATH.
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install WP-CLI
+      run: |
+        curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+        chmod +x wp-cli.phar
+        sudo mv wp-cli.phar /usr/local/bin/wp
+      shell: bash
