@@ -5,7 +5,7 @@
 # to allow for separation in the Action log and reuse
 # or partial workflow.
 #
-# @version 2.0.0
+# @version 2.1.0
 #
 ###################################################
 
@@ -15,7 +15,8 @@ description: Setup Node, Yarn, PHP, and ts-node
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-node@v4
+    - name: Install Node
+      uses: actions/setup-node@v4
       with:
         node-version: ${{env.NODE_VERSION}}
         registry-url: 'https://registry.npmjs.org'
@@ -28,7 +29,8 @@ runs:
       shell: bash
       run: npm install -g ts-node
 
-    - uses: "shivammathur/setup-php@v2"
+    - name: Install PHP
+      uses: shivammathur/setup-php@v2
       with:
         php-version: ${{env.PHP_VERSION}}
         tools: cs2pr
