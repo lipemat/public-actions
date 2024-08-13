@@ -107,13 +107,18 @@ jobs:
         shell: bash
 
 
-
-      - name: Run WP-Unit
+      - if: ${{ fromJSON(inputs.php) < 8.1 }}
+        name: Run WP-Unit Legacy
         env:
           MULTISITE: ${{ inputs.multisite }}
         run: |
-          if [ $(echo "${{ inputs.php }} < 8.1" | bc) -eq 1 ]; then
-            php wp-unit/vendor/bin/phpunit --configuration ${{ env.DIR }}/dev/wp-unit/phpunit-legacy.xml.dist"
-          else
-            php wp-unit/vendor/bin/phpunit --configuration ${{ env.DIR }}/dev/wp-unit/phpunit.xml.dist
-          fi
+          php wp-unit/vendor/bin/phpunit --configuration ${{ env.DIR }}/dev/wp-unit/phpunit-legacy.xml.dist
+        shell: bash
+
+      - if: ${{ fromJSON(inputs.php) >= 8.1 }}
+        name: Run WP-Unit
+        env:
+          MULTISITE: ${{ inputs.multisite }}
+        run: |
+          php wp-unit/vendor/bin/phpunit --configuration ${{ env.DIR }}/dev/wp-unit/phpunit.xml.dist
+        shell: bash
