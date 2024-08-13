@@ -21,9 +21,10 @@
 name: PHPStan - Plugin
 
 env:
-  VERSION: 0.0.4
+  VERSION: 0.0.5
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
+  DIR: ${{ vars.DIR }}
   NODE_VERSION: ${{ vars.NODE_VERSION }}
   PHPSTAN_VERSION: ${{ vars.PHPSTAN_VERSION }}
   PRO: ${{ vars.PRO }}
@@ -58,8 +59,8 @@ jobs:
       - name: Install PHPStan
         uses: lipemat/public-actions/install-phpstan@master
         env:
-          PHPSTAN_VERSION: ${{ vars.PHPSTAN_VERSION }}
+          PHPSTAN_VERSION: ${{ env.PHPSTAN_VERSION }}
 
       - name: Run PHPStan
         run: |
-          php phpstan/vendor/bin/phpstan analyze --configuration=${{ vars.DIR }}/phpstan.neon.dist --memory-limit=2G --no-progress --error-format=checkstyle | cs2pr
+          php phpstan/vendor/bin/phpstan analyze --configuration=${{ env.DIR }}/phpstan.neon.dist --memory-limit=2G --no-progress --error-format=checkstyle | cs2pr
