@@ -20,7 +20,7 @@
 name: WP Unit - Plugin
 
 env:
-  VERSION: 1.3.0
+  VERSION: 1.3.1
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -81,7 +81,7 @@ jobs:
         uses: lipemat/public-actions/install-wp-unit@master
 
       - name: Add WP-Unit Config
-        run: cp public-actions/resources/plugins/config/wp-unit-local-config.php content/plugins/${{ inputs.pro }}/dev/wp-unit/local-config.php
+        run: cp public-actions/resources/plugins/config/wp-unit-local-config.php content/plugins/${{ env.PRO }}/dev/wp-unit/local-config.php
 
 
 
