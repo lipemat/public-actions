@@ -48,16 +48,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout the PRO and BASIC plugins
-        uses: lipemat/public-actions/checkout-plugins@master
+        uses: lipemat/public-actions/checkout-plugins@version/1
 
       - name: Setup Node and PHP
-        uses: lipemat/public-actions/setup-dependencies@master
+        uses: lipemat/public-actions/setup-dependencies@version/1
         env:
           NODE_VERSION: ${{ env.NODE_VERSION }}
           PHP_VERSION: ${{ inputs.php }}
 
       - name: Install PHPStan
-        uses: lipemat/public-actions/install-phpstan@master
+        uses: lipemat/public-actions/install-phpstan@version/1
         env:
           PHPSTAN_VERSION: ${{ env.PHPSTAN_VERSION }}
 

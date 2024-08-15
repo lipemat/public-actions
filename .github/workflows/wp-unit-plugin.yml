@@ -54,7 +54,7 @@ jobs:
           ref: ${{ inputs.wp }}
 
       - name: Checkout the PRO and BASIC plugins
-        uses: lipemat/public-actions/checkout-plugins@master
+        uses: lipemat/public-actions/checkout-plugins@version/1
 
       - name: Checkout the public-actions repository
         uses: actions/checkout@v4
@@ -63,7 +63,7 @@ jobs:
           path: public-actions
 
       - name: Setup Node and PHP
-        uses: lipemat/public-actions/setup-dependencies@master
+        uses: lipemat/public-actions/setup-dependencies@version/1
         env:
           NODE_VERSION: 20.11.0
           PHP_VERSION: ${{ inputs.php }}
@@ -78,7 +78,7 @@ jobs:
           unzip -p public-actions/resources/plugins/config/wp-unit.sql.zip | mysql -u root -proot wp-unit
 
       - name: Install WP-Unit
-        uses: lipemat/public-actions/install-wp-unit@master
+        uses: lipemat/public-actions/install-wp-unit@version/1
 
       - name: Add WP-Unit Config
         run: cp public-actions/resources/plugins/config/wp-unit-local-config.php content/plugins/${{ env.PRO }}/dev/wp-unit/local-config.php
@@ -92,7 +92,7 @@ jobs:
         shell: bash
 
       - name: Install WP-CLI
-        uses: lipemat/public-actions/install-wp-cli@master
+        uses: lipemat/public-actions/install-wp-cli@version/1
 
       - name: Generate JS translations
         run: |

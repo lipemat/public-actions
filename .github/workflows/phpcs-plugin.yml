@@ -29,10 +29,10 @@ jobs:
           path: ${{ env.DIR }}
 
       - name: Setup Node and PHP
-        uses: lipemat/public-actions/setup-dependencies@master
+        uses: lipemat/public-actions/setup-dependencies@version/1
 
       - name: Install PHPCS
-        uses: lipemat/public-actions/install-phpcs@master
+        uses: lipemat/public-actions/install-phpcs@version/1
 
       - name: Run PHPCS
         run: phpcs/vendor/bin/phpcs --standard=${{ env.DIR }}/phpcs.xml.dist  -q --report=checkstyle | cs2pr
