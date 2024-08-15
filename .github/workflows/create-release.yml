@@ -1,0 +1,31 @@
+###################################################
+# Create a GitHub Release when a tag is pushed.
+#
+# @notice You must enable write permissions for this action to work.
+# 1. GitHub Settings
+# 2. Actions
+# 3. General
+# 4. Workflow permissions
+# 5. Enable "read and write permissions".
+#
+###################################################
+
+name: Create GitHub Release
+
+env:
+  VERSION: 0.0.1
+
+on:
+  workflow_call:
+
+jobs:
+  create-release:
+    name: Create release for ${{ github.ref_name }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: Version ${{ github.ref_name }}
+          draft: false
+          prerelease: false
