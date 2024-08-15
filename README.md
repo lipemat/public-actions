@@ -6,6 +6,17 @@ https://docs.github.com/en/actions/using-workflows/avoiding-duplication
 
 Feel free to use the contents of this repo as suggestions for your own actions. In order for our public repos to use them they must be public and GPL compatible.
 
+## Versioning
+
+GitHub Actions do not support getting minor or patch versions of an action without changing the workflow. For example, if you point to `@v1` you will not get `@v1.1` without changing the workflow. Typically, this is handled changing the ref that the `@v1` tag points to through either a special GitHub Action or manually tagging with `-f`. 
+
+Instead of using traditional tags for action version we use branches to allow for quickly deploying updates while still handling breaking changes with major version updates.
+
+Examples:
+- `@version/1` will always get the latest of major version 1. Think of it like `@v1.*.*` or in semver `^1.0.0`
+- `@version/2` will always get the latest of major version 2. Think of it like `@v2.*.*` or in semver `^2.0.0`
+- Pointing to a particular ref or commit is also supported.
+
 
 ## Composite Actions
 
