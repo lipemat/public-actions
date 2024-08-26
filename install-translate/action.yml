@@ -8,7 +8,7 @@
 # inputs:
 #   composer-flags: Optional flags to pass to composer install.
 #
-# @version 0.0.1
+# @version 0.0.2
 #
 ###################################################
 
@@ -28,4 +28,5 @@ runs:
       uses: ramsey/composer-install@v3
       with:
         composer-options: ${{ inputs.composer-flags }}
+        custom-cache-key: dev/translate-cli-${{ hashFiles('dev/translate-cli/composer.lock') }}
         working-directory: dev/translate-cli
