@@ -86,29 +86,8 @@ jobs:
       - name: Add WP-Unit Config
         run: cp public-actions/resources/plugins/config/wp-unit-local-config.php content/plugins/${{ env.PRO }}/dev/wp-unit/local-config.php
 
-
-
-      - name: Install Translations Dependencies
-        run: |
-          cd ${{ env.DIR }}/dev/translate-cli
-          composer install
-        shell: bash
-
-      - name: Install WP-CLI
-        uses: lipemat/public-actions/install-wp-cli@version/1
-
-      - name: Generate JS translations
-        run: |
-          cd ${{ env.DIR }}/dev/translate-cli
-          php command.php
-        shell: bash
-
-      - name: Generate PHP translations
-        run: |
-          cd ${{ env.DIR }}/languages
-          wp i18n make-php .
-        shell: bash
-
+      - name: Build Translations
+        uses: lipemat/public-actions/plugin-translations@version/1
 
       - if: ${{ fromJSON(inputs.php) < 8.1 }}
         name: Run WP-Unit Legacy

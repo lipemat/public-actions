@@ -1,0 +1,37 @@
+###################################################
+# Setup and build plugin translations in a reusable action.
+#
+# env:
+#   DIR: The directory of the plugin.
+#
+# @version 0.0.1
+#
+###################################################
+
+name: Generate Plugin Translations
+description: Setup and build plugin translations for PHP and JS.
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Translations Dependencies
+      run: |
+        cd ${{ env.DIR }}/dev/translate-cli
+        composer install
+      shell: bash
+
+    - name: Install WP-CLI
+      uses: lipemat/public-actions/install-wp-cli@version/1
+
+    - name: Generate JS translations
+      run: |
+        cd ${{ env.DIR }}/dev/translate-cli
+        php command.php
+      shell: bash
+
+    - name: Generate PHP translations
+      run: |
+        cd ${{ env.DIR }}/languages
+        wp i18n make-php .
+      shell: bash
