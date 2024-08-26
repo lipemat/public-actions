@@ -19,7 +19,7 @@
 
 name: Populate Caches - Plugin
 env:
-  VERSION: 1.1.0
+  VERSION: 1.2.0
   NODE_VERSION: ${{ vars.NODE_VERSION }}
   PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
   PHPSTAN_VERSION: ${{ vars.PHPSTAN_VERSION }}
@@ -46,3 +46,6 @@ jobs:
 
       - name: Populate PHPCS Cache
         uses: lipemat/public-actions/install-phpcs@version/1
+
+      - name: Install Translations Dependencies
+        uses: lipemat/public-actions/install-translate@version/1

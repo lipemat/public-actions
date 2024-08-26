@@ -1,0 +1,31 @@
+###################################################
+# Install and cache the translation command dependencies in a reusable action.
+#
+# Ideally:
+# 1. Master installs and caches the composer dependencies.
+# 2. Pull requests and deployments can reuse the cached dependencies.
+#
+# inputs:
+#   composer-flags: Optional flags to pass to composer install.
+#
+# @version 0.0.1
+#
+###################################################
+
+name: Install Translate Command Composer
+description: Install Translate Command Dependencies
+inputs:
+  composer-flags:
+    description: Flags to pass to Composer
+    required: false
+    default: "--no-plugins --no-scripts --prefer-dist"
+
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Translate Command Composer Dependencies
+      uses: ramsey/composer-install@v3
+      with:
+        composer-options: ${{ inputs.composer-flags }}
+        working-directory: dev/translate-cli

@@ -16,10 +16,7 @@ runs:
   using: "composite"
   steps:
     - name: Install Translations Dependencies
-      run: |
-        cd ${{ env.DIR }}/dev/translate-cli
-        composer install
-      shell: bash
+      uses: lipemat/public-actions/install-translate@version/1
 
     - name: Install WP-CLI
       uses: lipemat/public-actions/install-wp-cli@version/1
