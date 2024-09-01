@@ -1,13 +1,16 @@
 ###################################################
 # Install the PRO and BASIC plugins.
 #
-# Secrets must be set in the calling repository.
-# - PUBLIC_ACTIONS_PRO_REPO: A personal access token with access to the PRO plugin repository.
+# env:
+#   BASIC: The slug of the basic plugin.
+#   BASIC_BRANCH: Branch of the basic plugin to override master when used from the pro plugin. If '' then master is used.
+#   PRO: The slug of the pro plugin.
+#   PRO_BRANCH: Branch of the pro plugin to override master when used from the basic plugin. If '' then master is used.
 #
 # Token shared by all 4 plugins.
 # https://github.com/settings/personal-access-tokens/3757667
 #
-# @version 0.0.1
+# @version 0.1.0
 #
 ###################################################
 
@@ -17,6 +20,19 @@ description: Checkout the PRO and BASIC plugins.
 runs:
   using: "composite"
   steps:
+    - name: Determine Plugin refs
+      id: determine-pro-ref
+      run: |
+        if [[ "${{ env.DIR }}" == *"-pro"* ]]; then
+          echo "proRef=${{ github.head_ref }}" >> $GITHUB_ENV
+          echo "basicRef=${{ env.BASIC_BRANCH }}" >> $GITHUB_ENV
+        else
+          # Optional - Override the master branch using a GitHub Action variable.
+          echo "proRef=${{ env.PRO_BRANCH }}" >> $GITHUB_ENV
+          echo "basicRef=${{ github.head_ref }}" >> $GITHUB_ENV
+        fi
+      shell: bash
+
     - name: Checkout the PRO plugin
       uses: actions/checkout@v4
       with:
@@ -24,12 +40,11 @@ runs:
         path: content/plugins/${{ env.PRO }}
         token: ${{ env.TOKEN }}
         # Optional - Override the master branch using a GitHub Action variable.
-        ref: ${{ env.PRO_BRANCH }}
+        ref: ${{ env.proRef }}
 
     - name: Checkout the basic plugin
       uses: actions/checkout@v4
       with:
         repository: lipemat/${{ env.BASIC }}
         path: content/plugins/${{ env.BASIC }}
-        # Optional - Override the master branch using a GitHub Action variable.
-        ref: ${{ env.BASIC_BRANCH }}
+        ref: ${{ env.basicRef }}
