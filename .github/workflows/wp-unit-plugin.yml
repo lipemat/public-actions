@@ -64,6 +64,7 @@ jobs:
         with:
           repository: lipemat/public-actions
           path: public-actions
+          ref: version/1
 
       - name: Setup Node and PHP
         uses: lipemat/public-actions/setup-dependencies@version/1
