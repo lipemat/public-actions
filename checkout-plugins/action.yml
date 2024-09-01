@@ -27,7 +27,6 @@ runs:
           echo "proRef=${{ github.head_ref }}" >> $GITHUB_ENV
           echo "basicRef=${{ env.BASIC_BRANCH }}" >> $GITHUB_ENV
         else
-          # Optional - Override the master branch using a GitHub Action variable.
           echo "proRef=${{ env.PRO_BRANCH }}" >> $GITHUB_ENV
           echo "basicRef=${{ github.head_ref }}" >> $GITHUB_ENV
         fi
