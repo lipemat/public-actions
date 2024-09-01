@@ -27,9 +27,16 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Install Translate Command Composer Dependencies
+    - name: Install Basic Translate Command Composer Dependencies
       uses: ramsey/composer-install@v3
       with:
         composer-options: ${{ inputs.composer-flags }}
-        custom-cache-key: dev/translate-cli-${{ hashFiles( format( '{0}/dev/translate-cli/composer.lock', env.DIR ) ) }}
-        working-directory: ${{ env.DIR }}/dev/translate-cli
+        custom-cache-key: dev/translate-cli-${{ hashFiles( format( 'content/plugins/{0}/dev/translate-cli/composer.lock', env.BASIC ) ) }}
+        working-directory: content/plugins/${{ env.BASIC }}/dev/translate-cli
+
+    - name: Install PRO Translate Command Composer Dependencies
+      uses: ramsey/composer-install@v3
+      with:
+        composer-options: ${{ inputs.composer-flags }}
+        custom-cache-key: dev/translate-cli-${{ hashFiles( format( 'content/plugins/{0}/dev/translate-cli/composer.lock', env.PRO ) ) }}
+        working-directory: content/plugins/${{ env.PRO }}/dev/translate-cli

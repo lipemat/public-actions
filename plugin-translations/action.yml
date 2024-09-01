@@ -21,14 +21,26 @@ runs:
     - name: Install WP-CLI
       uses: lipemat/public-actions/install-wp-cli@version/1
 
-    - name: Generate JS translations
+    - name: Generate PRO JS translations
       run: |
-        cd ${{ env.DIR }}/dev/translate-cli
+        cd content/plugins/${{ env.PRO }}/dev/translate-cli
         php command.php
       shell: bash
 
-    - name: Generate PHP translations
+    - name: Generate Basic JS translations
       run: |
-        cd ${{ env.DIR }}/languages
+        cd content/plugins/${{ env.BASIC }}/dev/translate-cli
+        php command.php
+      shell: bash
+
+    - name: Generate Basic PHP translations
+      run: |
+        cd content/plugins/${{ env.BASIC }}/languages
+        wp i18n make-php .
+      shell: bash
+
+    - name: Generate PRO PHP translations
+      run: |
+        cd content/plugins/${{ env.PRO }}/languages
         wp i18n make-php .
       shell: bash
