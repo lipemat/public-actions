@@ -90,6 +90,12 @@ jobs:
         uses: lipemat/public-actions/plugin-translations@version/1
 
       - if: ${{ fromJSON(inputs.php) < 8.1 }}
+        name: Checkout PHPUnit 9
+        run: |
+          cd wp-unit
+          composer require phpunit/phpunit:^9.6.20 --dev --no-scripts --with-dependencies
+
+      - if: ${{ fromJSON(inputs.php) < 8.1 }}
         name: Run WP-Unit Legacy
         env:
           MULTISITE: ${{ inputs.multisite }}
