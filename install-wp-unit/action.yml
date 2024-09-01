@@ -5,12 +5,25 @@
 # 1. Master installs and caches the wp-unit dependency.
 # 2. Pull can reuse the cached wp-unit dependency.
 #
-# @version 0.0.3
+# env:
+#   WP_UNIT_VERSION: Version of lipemat/wp-unit to install.
+#                   - Typically set via repository variables on GitHub.
+# inputs:
+#   alwaysCache: Optionally always cache the WP-Unit dependencies regardless
+#                of the branch.
+#
+# @version 0.1.0
 #
 ###################################################
 
 name: Install WP-Unit
 description: Install WP-Unit and its dependencies.
+
+inputs:
+  alwaysCache:
+    description: Always cache the WP-Unit dependencies regardless of the branch.
+    required: false
+    default: 'false'
 
 runs:
   using: "composite"
@@ -40,7 +53,7 @@ runs:
       shell: bash
 
     # Only save the cache on the master branch.
-    - if: ${{ github.ref == 'refs/heads/master' }}
+    - if: ${{ github.ref == 'refs/heads/master' || inputs.alwaysCache == 'true' }}
       name: Save WP-Unit to Cache
       uses: actions/cache/save@v4
       id: cache-wp-unit

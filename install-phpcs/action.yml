@@ -8,13 +8,22 @@
 # env:
 #    PHPCS_VERSION: Version of lipemat/wp-phpcs to install.
 #                   - Typically set via repository variables on GitHub.
+# inputs:
+#   alwaysCache: Optionally always cache the PHPStan dependencies regardless
+#                of the branch.
 #
-# @version 0.0.2
+# @version 0.1.0
 #
 ###################################################
 
 name: Install PHPCS
 description: Install PHPCS and its dependencies.
+
+inputs:
+  alwaysCache:
+    description: Always cache the PHPStan dependencies regardless of the branch.
+    required: false
+    default: 'false'
 
 runs:
   using: "composite"
@@ -44,7 +53,7 @@ runs:
       shell: bash
 
     # Only save the cache on the master branch.
-    - if: ${{ github.ref == 'refs/heads/master' }}
+    - if: ${{ github.ref == 'refs/heads/master' || inputs.alwaysCache == 'true' }}
       name: Save PHPCS to Cache
       uses: actions/cache/save@v4
       id: cache-phpcs
