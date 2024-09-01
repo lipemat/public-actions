@@ -80,6 +80,10 @@ jobs:
         run: |
           unzip -p public-actions/resources/plugins/config/wp-unit.sql.zip | mysql -u root -proot wp-unit
 
+      - name: Add object-cache file to wp-content
+        run: |
+          cp public-actions/resources/plugins/object-cache.php content/object-cache.php
+
       - name: Install WP-Unit
         uses: lipemat/public-actions/install-wp-unit@version/1
 
