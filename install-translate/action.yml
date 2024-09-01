@@ -5,10 +5,13 @@
 # 1. Master installs and caches the composer dependencies.
 # 2. Pull requests and deployments can reuse the cached dependencies.
 #
+# env:
+#   DIR: The directory of the plugin.
 # inputs:
 #   composer-flags: Optional flags to pass to composer install.
 #
-# @version 0.0.2
+#
+# @version 0.0.3
 #
 ###################################################
 
@@ -28,5 +31,5 @@ runs:
       uses: ramsey/composer-install@v3
       with:
         composer-options: ${{ inputs.composer-flags }}
-        custom-cache-key: dev/translate-cli-${{ hashFiles('dev/translate-cli/composer.lock') }}
-        working-directory: dev/translate-cli
+        custom-cache-key: dev/translate-cli-${{ hashFiles( format( '{0}/dev/translate-cli/composer.lock', env.DIR ) ) }}
+        working-directory: ${{ env.DIR }}/dev/translate-cli
