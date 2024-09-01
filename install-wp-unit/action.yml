@@ -12,7 +12,7 @@
 #   alwaysCache: Optionally always cache the WP-Unit dependencies regardless
 #                of the branch.
 #
-# @version 0.1.0
+# @version 0.1.1
 #
 ###################################################
 
@@ -36,7 +36,6 @@ runs:
           wp-unit
           dev/wp-unit/.phpunit.cache
         key: wp-unit-${{ env.WP_UNIT_VERSION }}
-        restore-keys: wp-unit-${{ env.WP_UNIT_VERSION }}
 
     - if: ${{ steps.restore-wp-unit.outputs.cache-hit != 'true' }}
       name: Install WP-Unit

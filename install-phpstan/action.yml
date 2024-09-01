@@ -14,7 +14,7 @@
 #   alwaysCache: Optionally always cache the PHPStan dependencies regardless
 #                of the branch.
 #
-# @version 0.4.0
+# @version 0.4.1
 #
 ###################################################
 
@@ -38,7 +38,6 @@ runs:
           phpstan
           /tmp/phpstan
         key: phpstan-${{ env.PHPSTAN_VERSION }}-${{ env.STUBS_VERSION }}
-        restore-keys: phpstan-${{ env.PHPSTAN_VERSION }}-${{ env.STUBS_VERSION }}
 
     - if: ${{ steps.restore-phpstan.outputs.cache-hit != 'true' }}
       name: Install PHPStan

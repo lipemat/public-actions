@@ -12,7 +12,7 @@
 #   alwaysCache: Optionally always cache the PHPStan dependencies regardless
 #                of the branch.
 #
-# @version 0.1.0
+# @version 0.1.1
 #
 ###################################################
 
@@ -36,7 +36,6 @@ runs:
           phpcs
           .phpcs.cache
         key: phpcs-${{ env.PHPCS_VERSION }}
-        restore-keys: phpcs-${{ env.PHPCS_VERSION }}
 
     - if: ${{ steps.restore-phpcs.outputs.cache-hit != 'true' }}
       name: Install PHPCS
