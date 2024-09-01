@@ -6,37 +6,53 @@
 # 2. Pull requests and deployments can reuse the cached dependencies.
 #
 # env:
-#   DIR: The directory of the plugin.
+#   BASIC: Directory slug for the BASIC plugin.
+#   PRO: Directory slug for the PRO plugin.
 # inputs:
-#   composer-flags: Optional flags to pass to composer install.
+#   composer-flags: Optional flags to pass to Composer.
 #
-#
-# @version 0.0.3
+# @version 0.0.4
 #
 ###################################################
 
 name: Install Translate Command Composer
 description: Install Translate Command Dependencies
+
 inputs:
   composer-flags:
     description: Flags to pass to Composer
     required: false
     default: "--no-plugins --no-scripts --prefer-dist"
 
-
 runs:
   using: "composite"
   steps:
-    - name: Install Basic Translate Command Composer Dependencies
-      uses: ramsey/composer-install@v3
+    - name: Restore Translate CLI from Cache
+      uses: actions/cache/restore@v4
+      id: restore-translate-cli
       with:
-        composer-options: ${{ inputs.composer-flags }}
-        custom-cache-key: dev/translate-cli-${{ hashFiles( format( 'content/plugins/{0}/dev/translate-cli/composer.lock', env.BASIC ) ) }}
-        working-directory: content/plugins/${{ env.BASIC }}/dev/translate-cli
+        path: /tmp/composer-cache
+        key: translate-cli-${{ hashFiles( format( 'content/plugins/{0}/dev/translate-cli/composer.lock', env.BASIC ), format( 'content/plugins/{0}/dev/translate-cli/composer.lock', env.PRO ) ) }}
 
-    - name: Install PRO Translate Command Composer Dependencies
-      uses: ramsey/composer-install@v3
+    - if: ${{ steps.restore-translate-cli.outputs.cache-hit != 'true' }}
+      name: Install Basic Translate Command Composer Dependencies
+      uses: php-actions/composer@v6
       with:
-        composer-options: ${{ inputs.composer-flags }}
-        custom-cache-key: dev/translate-cli-${{ hashFiles( format( 'content/plugins/{0}/dev/translate-cli/composer.lock', env.PRO ) ) }}
-        working-directory: content/plugins/${{ env.PRO }}/dev/translate-cli
+        args: ${{inputs.composer-flags}}
+        working_dir: content/plugins/${{ env.BASIC }}/dev/translate-cli
+
+    - if: ${{ steps.restore-translate-cli.outputs.cache-hit != 'true' }}
+      name: Install PRO Translate Command Composer Dependencies
+      uses: php-actions/composer@v6
+      with:
+        args: ${{inputs.composer-flags}}
+        working_dir: content/plugins/${{ env.PRO }}/dev/translate-cli
+
+    # Only save the cache on the master branch.
+    - if: ${{ github.ref == 'refs/heads/master' }}
+      name: Save Translate CLI to Cache
+      uses: actions/cache/save@v4
+      id: cache-translate-cli
+      with:
+        path: /tmp/composer-cache
+        key: translate-cli-${{ hashFiles( format( 'content/plugins/{0}/dev/translate-cli/composer.lock', env.BASIC ), format( 'content/plugins/{0}/dev/translate-cli/composer.lock', env.PRO ) ) }}
