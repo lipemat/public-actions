@@ -21,7 +21,7 @@
 name: PHPStan - Plugin
 
 env:
-  VERSION: 0.0.5
+  VERSION: 0.0.6
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -60,6 +60,8 @@ jobs:
         uses: lipemat/public-actions/install-phpstan@version/1
         env:
           PHPSTAN_VERSION: ${{ env.PHPSTAN_VERSION }}
+        with:
+          alwaysCache: 'true'
 
       - name: Run PHPStan
         run: |

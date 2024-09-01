@@ -11,7 +11,7 @@
 name: PHPCS - Plugin
 
 env:
-  VERSION: 0.0.5
+  VERSION: 0.0.6
   DIR: ${{ vars.DIR }}
   PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
 
@@ -33,6 +33,8 @@ jobs:
 
       - name: Install PHPCS
         uses: lipemat/public-actions/install-phpcs@version/1
+        with:
+          alwaysCache: 'true'
 
       - name: Run PHPCS
         run: phpcs/vendor/bin/phpcs --standard=${{ env.DIR }}/phpcs.xml.dist  -q --report=checkstyle | cs2pr
