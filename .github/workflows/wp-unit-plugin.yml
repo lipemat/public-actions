@@ -72,6 +72,9 @@ jobs:
           NODE_VERSION: 20.11.0
           PHP_VERSION: ${{ inputs.php }}
 
+      - name: Install Memcached Service
+        uses: niden/actions-memcached@v7
+
       - name: Set up MySQL
         run: |
           sudo /etc/init.d/mysql start
