@@ -13,7 +13,7 @@
 name: Create GitHub Release
 
 env:
-  VERSION: 0.0.1
+  VERSION: 0.1.0
 
 on:
   workflow_call:
@@ -28,4 +28,5 @@ jobs:
         with:
           name: Version ${{ github.ref_name }}
           draft: false
+          generate_release_notes: true
           prerelease: false
