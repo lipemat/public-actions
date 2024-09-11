@@ -19,11 +19,13 @@
 
 name: Populate Caches - Plugin
 env:
-  VERSION: 1.2.0
+  VERSION: 1.2.1
+  BASIC: ${{ vars.BASIC }}
   NODE_VERSION: ${{ vars.NODE_VERSION }}
   PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
   PHPSTAN_VERSION: ${{ vars.PHPSTAN_VERSION }}
   PHP_VERSION: ${{ vars.PHP_VERSION }}
+  PRO: ${{ vars.PRO }}
   WP_UNIT_VERSION: ${{ vars.WP_UNIT_VERSION }}
 
 on:

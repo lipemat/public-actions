@@ -2,7 +2,8 @@
 # Setup and build plugin translations in a reusable action.
 #
 # env:
-#   DIR: The directory of the plugin.
+#   PRO: Directory slug for the PRO plugin.
+#   BASIC: Directory slug for the BASIC plugin.
 #
 # @version 0.0.2
 #
