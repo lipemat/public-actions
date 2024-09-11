@@ -7,6 +7,7 @@
 #   DIR: The directory of the plugin.
 #   PRO: The slug of the pro plugin.
 #   PRO_BRANCH: Branch of the pro plugin to override master when used from the basic plugin. If '' then master is used.
+#   TOKEN: The token to access the pro repository.
 #
 # Token shared by all 4 plugins.
 # https://github.com/settings/personal-access-tokens/3757667

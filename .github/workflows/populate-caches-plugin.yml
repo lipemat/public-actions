@@ -19,6 +19,8 @@
 #   PRO: The pro plugin slug.
 #   PRO_BRANCH: The branch of the pro plugin.
 #   WP_UNIT_VERSION: The version of WP-Unit to install.
+# secrets:
+#   PUBLIC_ACTIONS_PRO_REPO: The token to access the pro repository.
 #
 ###################################################
 
@@ -34,6 +36,7 @@ env:
   PHP_VERSION: ${{ vars.PHP_VERSION }}
   PRO: ${{ vars.PRO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
+  TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
   WP_UNIT_VERSION: ${{ vars.WP_UNIT_VERSION }}
 
 on:
