@@ -12,7 +12,7 @@
 #   alwaysCache: Optionally always cache the PHPStan dependencies regardless
 #                of the branch.
 #
-# @version 0.1.1
+# @version 0.2.0
 #
 ###################################################
 
@@ -52,7 +52,7 @@ runs:
       shell: bash
 
     # Only save the cache on the master branch.
-    - if: ${{ github.ref == 'refs/heads/master' || inputs.alwaysCache == 'true' }}
+    - if: ${{ steps.restore-phpcs.outputs.cache-hit != 'true' && ( github.ref == 'refs/heads/master' || inputs.alwaysCache == 'true' ) }}
       name: Save PHPCS to Cache
       uses: actions/cache/save@v4
       id: cache-phpcs
