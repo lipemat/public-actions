@@ -49,7 +49,7 @@ jobs:
       - name: Populate PHPCS Cache
         uses: lipemat/public-actions/install-phpcs@version/1
 
-      - name: Install Translations Dependencies
+      - name: Populate Translations Composer Cache
         uses: lipemat/public-actions/install-translate@version/1
         with:
           dir: .

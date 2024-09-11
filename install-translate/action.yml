@@ -8,7 +8,7 @@
 # inputs:
 #    dir: The directory of the plugin to build translations for.
 #
-# @version 1.0.0
+# @version 1.0.1
 #
 ###################################################
 
@@ -25,12 +25,13 @@ runs:
   steps:
     - name: Cache Translate CLI
       uses: actions/cache@v3
-      id: restore-translate-cli
+      id: cache-translate-cli
       with:
         path: /tmp/composer-cache
         key: translate-cli-${{ hashFiles( format( '{0}/dev/translate-cli/composer.lock', inputs.dir ) ) }}
 
-    - name: Install Translate Command Composer Dependencies
+    - if: ${{ steps.cache-translate-cli.outputs.cache-hit != 'true'  }}
+      name: Install Translate Command Composer Dependencies
       uses: php-actions/composer@v6
       with:
         args: --no-plugins --no-scripts --prefer-dist
