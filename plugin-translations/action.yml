@@ -4,7 +4,7 @@
 # inputs:
 #    dir: The directory of the plugin to build translations for.
 #
-# @version 1.0.0
+# @version 1.0.1
 #
 ###################################################
 
@@ -29,7 +29,7 @@ runs:
 
     - name: Generate JS translations
       run: |
-        cd ${{ env.dir }}/dev/translate-cli
+        cd ${{ inputs.dir }}/dev/translate-cli
         php command.php
       shell: bash
 
