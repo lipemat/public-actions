@@ -97,8 +97,15 @@ jobs:
       - name: Add WP-Unit Config
         run: cp public-actions/resources/plugins/config/wp-unit-local-config.php content/plugins/${{ env.PRO }}/dev/wp-unit/local-config.php
 
-      - name: Build Translations
+      - name: Build PRO Translations
         uses: lipemat/public-actions/plugin-translations@version/1
+        with:
+          dir: content/plugins/${{ env.PRO }}
+
+      - name: Build BASIC Translations
+        uses: lipemat/public-actions/plugin-translations@version/1
+        with:
+          dir: content/plugins/${{ env.BASIC }}
 
       - if: ${{ fromJSON(inputs.php) < 8.1 }}
         name: Checkout PHPUnit 9

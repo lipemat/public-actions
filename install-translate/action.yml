@@ -5,16 +5,20 @@
 # 1. Master installs and caches the composer dependencies.
 # 2. Pull requests and deployments can reuse the cached dependencies.
 #
-# env:
-#   BASIC: Directory slug for the BASIC plugin.
-#   PRO: Directory slug for the PRO plugin.
+# inputs:
+#    dir: The directory of the plugin to build translations for.
 #
-# @version 0.0.6
+# @version 1.0.0
 #
 ###################################################
 
-name: Install Translate Command Composer
+name: Install Translate Composer
 description: Install Translate Command Dependencies
+
+inputs:
+  dir:
+    description: Directory of the plugin to build translations for.
+    required: true
 
 runs:
   using: "composite"
@@ -24,17 +28,10 @@ runs:
       id: restore-translate-cli
       with:
         path: /tmp/composer-cache
-        key: translate-cli-${{ hashFiles( format( 'content/plugins/{0}/dev/translate-cli/composer.lock', env.BASIC ), format( 'content/plugins/{0}/dev/translate-cli/composer.lock', env.PRO ) ) }}
+        key: translate-cli-${{ hashFiles( format( '{0}/dev/translate-cli/composer.lock', inputs.dir ) ) }}
 
-    - if: ${{ hashFiles(format('content/plugins/{0}/dev/translate-cli/composer.json', env.BASIC )) != ''}}
-      name: Install Basic Translate Command Composer Dependencies
+    - name: Install Translate Command Composer Dependencies
       uses: php-actions/composer@v6
       with:
         args: --no-plugins --no-scripts --prefer-dist
-        working_dir: content/plugins/${{ env.BASIC }}/dev/translate-cli
-
-    - name: Install PRO Translate Command Composer Dependencies
-      uses: php-actions/composer@v6
-      with:
-        args: --no-plugins --no-scripts --prefer-dist
-        working_dir: content/plugins/${{ env.PRO }}/dev/translate-cli
+        working_dir: ${{ inputs.dir }}/dev/translate-cli

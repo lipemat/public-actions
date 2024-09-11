@@ -1,48 +1,40 @@
 ###################################################
 # Setup and build plugin translations in a reusable action.
 #
-# env:
-#   PRO: Directory slug for the PRO plugin.
-#   BASIC: Directory slug for the BASIC plugin.
+# inputs:
+#    dir: The directory of the plugin to build translations for.
 #
-# @version 0.0.2
+# @version 1.0.0
 #
 ###################################################
 
 name: Generate Plugin Translations
 description: Setup and build plugin translations for PHP and JS.
 
+inputs:
+  dir:
+    description: Directory of the plugin to build translations for.
+    required: true
 
 runs:
   using: "composite"
   steps:
     - name: Install Translations Dependencies
       uses: lipemat/public-actions/install-translate@version/1
+      with:
+        dir: ${{ inputs.dir }}
 
     - name: Install WP-CLI
       uses: lipemat/public-actions/install-wp-cli@version/1
 
-    - name: Generate PRO JS translations
+    - name: Generate JS translations
       run: |
-        cd content/plugins/${{ env.PRO }}/dev/translate-cli
+        cd ${{ env.dir }}/dev/translate-cli
         php command.php
       shell: bash
 
-    - if: ${{ hashFiles(format('content/plugins/{0}/dev/translate-cli/composer.json', env.BASIC )) != ''}}
-      name: Generate Basic JS translations
+    - name: Generate PHP translations
       run: |
-        cd content/plugins/${{ env.BASIC }}/dev/translate-cli
-        php command.php
-      shell: bash
-
-    - name: Generate Basic PHP translations
-      run: |
-        cd content/plugins/${{ env.BASIC }}/languages
-        wp i18n make-php .
-      shell: bash
-
-    - name: Generate PRO PHP translations
-      run: |
-        cd content/plugins/${{ env.PRO }}/languages
+        cd ${{ inputs.dir }}/languages
         wp i18n make-php .
       shell: bash
