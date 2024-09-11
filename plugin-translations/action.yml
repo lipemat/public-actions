@@ -4,7 +4,7 @@
 # env:
 #   DIR: The directory of the plugin.
 #
-# @version 0.0.1
+# @version 0.0.2
 #
 ###################################################
 
@@ -27,7 +27,8 @@ runs:
         php command.php
       shell: bash
 
-    - name: Generate Basic JS translations
+    - if: ${{ hashFiles(format('content/plugins/{0}/dev/translate-cli/composer.json', env.BASIC )) != ''}}
+      name: Generate Basic JS translations
       run: |
         cd content/plugins/${{ env.BASIC }}/dev/translate-cli
         php command.php

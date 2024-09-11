@@ -9,7 +9,7 @@
 #   BASIC: Directory slug for the BASIC plugin.
 #   PRO: Directory slug for the PRO plugin.
 #
-# @version 0.0.5
+# @version 0.0.6
 #
 ###################################################
 
@@ -26,7 +26,8 @@ runs:
         path: /tmp/composer-cache
         key: translate-cli-${{ hashFiles( format( 'content/plugins/{0}/dev/translate-cli/composer.lock', env.BASIC ), format( 'content/plugins/{0}/dev/translate-cli/composer.lock', env.PRO ) ) }}
 
-    - name: Install Basic Translate Command Composer Dependencies
+    - if: ${{ hashFiles(format('content/plugins/{0}/dev/translate-cli/composer.json', env.BASIC )) != ''}}
+      name: Install Basic Translate Command Composer Dependencies
       uses: php-actions/composer@v6
       with:
         args: --no-plugins --no-scripts --prefer-dist
