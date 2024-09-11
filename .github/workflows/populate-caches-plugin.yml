@@ -20,7 +20,7 @@
 
 name: Populate Caches - Plugin
 env:
-  VERSION: 1.3.0
+  VERSION: 1.3.1
   DIR: ${{ vars.DIR }}
   NODE_VERSION: ${{ vars.NODE_VERSION }}
   PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
@@ -43,7 +43,7 @@ jobs:
       - name: Build Translations
         uses: lipemat/public-actions/plugin-translations@version/1
         with:
-          dir: ${{ env.DIR }}
+          dir: .
 
       - name: Setup Node and PHP
         uses: lipemat/public-actions/setup-dependencies@version/1
