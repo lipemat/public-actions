@@ -19,7 +19,7 @@
 
 name: Populate Caches - Plugin
 env:
-  VERSION: 1.2.1
+  VERSION: 1.2.2
   BASIC: ${{ vars.BASIC }}
   NODE_VERSION: ${{ vars.NODE_VERSION }}
   PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
@@ -37,8 +37,8 @@ jobs:
     name: Populate all caches
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout this repository
-        uses: actions/checkout@v4
+      - name: Checkout the PRO and BASIC plugins
+        uses: lipemat/public-actions/checkout-plugins@version/1
 
       - name: Setup Node and PHP
         uses: lipemat/public-actions/setup-dependencies@version/1
