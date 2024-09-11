@@ -35,3 +35,5 @@ runs:
       with:
         args: --no-plugins --no-scripts --prefer-dist
         working_dir: ${{ inputs.dir }}/dev/translate-cli
+      env:
+        SSH_PRIVATE_KEY: "SSH_PRIVATE_KEY env breaks the action"
