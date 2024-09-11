@@ -9,23 +9,31 @@
 # Variables must be set in the calling repository.
 # https://github.com/lipemat/<plugin>/settings/variables/actions
 # vars:
+#   BASIC: The basic plugin slug.
+#   BASIC_BRANCH: The branch of the basic plugin.
+#   DIR: The directory of the plugin.
 #   NODE_VERSION: The version of Node to install.
 #   PHPCS_VERSION: The version of PHPCS to install.
 #   PHPSTAN_VERSION: The version of PHPStan to install.
 #   PHP_VERSION: The version of PHP to install.
+#   PRO: The pro plugin slug.
+#   PRO_BRANCH: The branch of the pro plugin.
 #   WP_UNIT_VERSION: The version of WP-Unit to install.
 #
 ###################################################
 
 name: Populate Caches - Plugin
 env:
-  VERSION: 1.2.2
+  VERSION: 1.2.3
   BASIC: ${{ vars.BASIC }}
+  BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
+  DIR: ${{ vars.DIR }}
   NODE_VERSION: ${{ vars.NODE_VERSION }}
   PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
   PHPSTAN_VERSION: ${{ vars.PHPSTAN_VERSION }}
   PHP_VERSION: ${{ vars.PHP_VERSION }}
   PRO: ${{ vars.PRO }}
+  PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   WP_UNIT_VERSION: ${{ vars.WP_UNIT_VERSION }}
 
 on:

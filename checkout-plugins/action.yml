@@ -4,6 +4,7 @@
 # env:
 #   BASIC: The slug of the basic plugin.
 #   BASIC_BRANCH: Branch of the basic plugin to override master when used from the pro plugin. If '' then master is used.
+#   DIR: The directory of the plugin.
 #   PRO: The slug of the pro plugin.
 #   PRO_BRANCH: Branch of the pro plugin to override master when used from the basic plugin. If '' then master is used.
 #
