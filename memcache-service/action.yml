@@ -1,0 +1,32 @@
+###############################################
+# Install and start the Memcache service.
+#
+# - Tests the service after installation.
+#
+# Version: 1.0.0
+#
+###############################################
+
+name: Memcache Service
+description: Install and test Memcache service
+
+runs:
+  using: composite
+  steps:
+    - name: Install Memcache
+      run: sudo apt install -y memcached
+      shell: bash
+
+    - name: Start Memcache
+      run: sudo service memcached start
+      shell: bash
+
+    - name: Check if Memcache is available
+      run: |
+        if nc -zv localhost 11211; then
+          echo "Memcache is available on port 11211"
+        else
+          echo "Memcache is not available on port 11211"
+          exit 1
+        fi
+      shell: bash
