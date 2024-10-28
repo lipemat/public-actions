@@ -1,0 +1,61 @@
+###################################################
+# A reusable workflow for publishing a Node package.
+#
+# inputs:
+#   beta: Run the workflow for beta releases.
+#   nodeVersion: The version of Node to install.
+#   withInstall: Run `yarn install` before publishing.
+# secrets:
+#   NPM_TOKEN: From "Access Tokens" settings in NPM profile (or CRM stored one).
+#
+###################################################
+name: Publish Node Package
+
+env:
+  VERSION: 0.0.1
+  TZ: 'America/New_York'
+
+on:
+  workflow_call:
+    inputs:
+      beta:
+        description: Run the workflow for beta releases.
+        required: true
+        type: boolean
+      nodeVersion:
+        required: true
+        type: string
+      withInstall:
+        required: true
+        type: boolean
+
+jobs:
+  publish:
+    name: Publish on npm.js
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node and PHP
+        uses: lipemat/public-actions/setup-dependencies@version/1
+        env:
+          NODE_VERSION: ${{ inputs.node_version }}
+          PHP_VERSION: latest
+
+      - if: ${{ inputs.withInstall }}
+        name: Install node modules
+        shell: bash
+        run: yarn install
+
+      - if: ${{ inputs.beta == false}}
+        name: Publish to NPM
+        run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
+
+      - if: ${{ inputs.beta == true}}
+        name: Publish Beta to NPM
+        run: npm publish --tag beta
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
