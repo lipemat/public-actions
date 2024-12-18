@@ -39,7 +39,7 @@ https://docs.github.com/en/actions/using-workflows/reusing-workflows
 jobs:
   populate:
     name: Populate all caches
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Setup Node and PHP
         uses: lipemat/public-actions/setup-dependencies@v1
