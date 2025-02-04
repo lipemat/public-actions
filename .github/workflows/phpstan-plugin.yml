@@ -14,6 +14,7 @@
 #   PUBLIC_ACTIONS_PRO_REPO: The token to access the pro repository.
 # inputs:
 #   php: The PHP version to use.
+#   phpstan-version: The version of PHPStan to install (defaults to ${{ vars.PHPSTAN_VERSION }}).
 #   stubs: The version of the `lipemat/phpstan-wordpress` to install.
 #
 ###################################################
@@ -21,12 +22,11 @@
 name: PHPStan - Plugin
 
 env:
-  VERSION: 0.0.6
+  VERSION: 0.0.7
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
   NODE_VERSION: ${{ vars.NODE_VERSION }}
-  PHPSTAN_VERSION: ${{ vars.PHPSTAN_VERSION }}
   PRO: ${{ vars.PRO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   STUBS_VERSION: ${{ inputs.stubs }}
@@ -38,9 +38,14 @@ on:
       php:
         required: true
         type: string
+      phpstan-version:
+        required: false
+        type: string
+        default: ${{ vars.PHPSTAN_VERSION }}
       stubs:
         required: true
         type: string
+
 
 jobs:
   phpstan:
@@ -59,7 +64,7 @@ jobs:
       - name: Install PHPStan
         uses: lipemat/public-actions/install-phpstan@version/1
         env:
-          PHPSTAN_VERSION: ${{ env.PHPSTAN_VERSION }}
+          PHPSTAN_VERSION: ${{ inputs.phpstan-version }}
         with:
           alwaysCache: 'true'
 
