@@ -62,6 +62,11 @@ jobs:
           path: wp
           ref: ${{ inputs.wp }}
 
+      - name: Create theme directory
+        run: |
+          mkdir -p content/themes
+          cp -r wp/wp-content/themes/twentytwentythree content/themes/twentytwentythree
+
       - name: Checkout the PRO and BASIC plugins
         uses: lipemat/public-actions/checkout-plugins@version/1
 
