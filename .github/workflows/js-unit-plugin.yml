@@ -3,12 +3,13 @@
 #
 # Variables must be set in the calling repository.
 # vars:
+#   BASIC: The basic plugin slug.
 #   BASIC_BRANCH: The branch of the basic plugin.
+#   DIR: The directory of the plugin.
 #   NODE_VERSION: The version of Node to install.
+#   PRO: The pro plugin slug.
 #   PRO_BRANCH: The branch of the pro plugin.
-#
-# inputs:
-#   is-pro: Whether were testing the PRO plugin and therefore need to check out the PRO and BASIC plugins.
+#   TOKEN: The token to access the pro repository.
 #
 ###################################################
 
@@ -16,17 +17,16 @@ name: JS Unit - Plugin
 
 env:
   VERSION: 0.1.0
+  BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
+  DIR: ${{ vars.DIR }}
   NODE_VERSION: ${{ vars.NODE_VERSION }}
+  PRO: ${{ vars.PRO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
+  TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
 
 on:
   workflow_call:
-    inputs:
-      is-pro:
-        required: false
-        type: boolean
-        default: false
 
 
 jobs:
@@ -34,11 +34,11 @@ jobs:
     name: Run JS Unit tests
     runs-on: ubuntu-24.04
     steps:
-      - if: ${{ inputs.is-pro == false }}
+      - if: ${{ !endsWith(env.DIR, '-pro') }}
         name: Checkout the plugin
         uses: actions/checkout@v4
 
-      - if: ${{ inputs.is-pro == true }}
+      - if: ${{ endsWith(env.DIR, '-pro') }}
         name: Checkout the PRO and BASIC plugins
         uses: lipemat/public-actions/checkout-plugins@version/1
 
