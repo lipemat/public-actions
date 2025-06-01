@@ -3,27 +3,44 @@
 #
 # Variables must be set in the calling repository.
 # vars:
+#   BASIC_BRANCH: The branch of the basic plugin.
 #   NODE_VERSION: The version of Node to install.
-#   PHPCS_VERSION: Version of `lipemat/wp-phpcs` to install.
+#   PRO_BRANCH: The branch of the pro plugin.
+#
+# inputs:
+#   is-pro: Whether were testing the PRO plugin and therefore need to check out the PRO and BASIC plugins.
 #
 ###################################################
 
 name: JS Unit - Plugin
 
 env:
-  VERSION: 0.0.1
+  VERSION: 0.1.0
+  BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   NODE_VERSION: ${{ vars.NODE_VERSION }}
+  PRO_BRANCH: ${{ vars.PRO_BRANCH }}
 
 on:
   workflow_call:
+    inputs:
+      is-pro:
+        required: false
+        type: boolean
+        default: false
+
 
 jobs:
   JS-Unit:
     name: Run JS Unit tests
     runs-on: ubuntu-24.04
     steps:
-      - name: Checkout the plugin
+      - if: ${{ inputs.is-pro == false }}
+        name: Checkout the plugin
         uses: actions/checkout@v4
+
+      - if: ${{ inputs.is-pro == true }}
+        name: Checkout the PRO and BASIC plugins
+        uses: lipemat/public-actions/checkout-plugins@version/1
 
       - name: Setup Node and PHP
         uses: lipemat/public-actions/setup-dependencies@version/1
