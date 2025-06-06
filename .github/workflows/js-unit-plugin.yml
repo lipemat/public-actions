@@ -16,7 +16,7 @@
 name: JS Unit - Plugin
 
 env:
-  VERSION: 0.1.0
+  VERSION: 0.2.0
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -44,6 +44,9 @@ jobs:
 
       - name: Setup Node and PHP
         uses: lipemat/public-actions/setup-dependencies@version/1
+
+      - name: Validate JS Dist
+        uses: lipemat/actions/build-theme@version/1
 
       - name: Validate CSS Modules
         run: yarn lipemat-js-boilerplate validate-css-modules
