@@ -46,7 +46,10 @@ jobs:
         uses: lipemat/public-actions/setup-dependencies@version/1
 
       - name: Validate JS Dist
-        uses: lipemat/actions/build-theme@version/1
+        run: |
+          export NODE_ENV=production
+          yarn dist
+        shell: bash
 
       - name: Validate CSS Modules
         run: yarn lipemat-js-boilerplate validate-css-modules
