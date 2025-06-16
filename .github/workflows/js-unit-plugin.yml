@@ -37,6 +37,8 @@ jobs:
       - if: ${{ !endsWith(env.DIR, '-pro') }}
         name: Checkout the plugin
         uses: actions/checkout@v4
+        with:
+          path: ${{ env.DIR }}
 
       - if: ${{ endsWith(env.DIR, '-pro') }}
         name: Checkout the PRO and BASIC plugins
@@ -48,12 +50,12 @@ jobs:
       - name: Validate JS Dist
         run: |
           export NODE_ENV=production
-          yarn dist
+          cd ${{ env.DIR }} && yarn dist
         shell: bash
 
       - name: Validate CSS Modules
-        run: yarn lipemat-js-boilerplate validate-css-modules
+        run: cd ${{ env.DIR }} && yarn lipemat-js-boilerplate validate-css-modules
 
       - name: Run JS Tests
-        run: yarn test
+        run: cd ${{ env.DIR }} && yarn test
         shell: bash
