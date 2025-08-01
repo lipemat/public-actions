@@ -13,7 +13,10 @@
 name: Create GitHub Release
 
 env:
-  VERSION: 0.1.0
+  VERSION: 0.1.1
+
+permissions:
+  contents: write
 
 on:
   workflow_call:

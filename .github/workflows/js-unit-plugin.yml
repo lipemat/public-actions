@@ -16,7 +16,7 @@
 name: JS Unit - Plugin
 
 env:
-  VERSION: 0.2.0
+  VERSION: 0.2.1
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -24,6 +24,10 @@ env:
   PRO: ${{ vars.PRO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
+
+permissions:
+  actions: read
+  contents: read
 
 on:
   workflow_call:

@@ -1,14 +1,16 @@
 ###################################################
 # Lint PHP files in the repository
 #
-# @version 0.0.1
-#
 ###################################################
 
 name: Lint PHP
 
 env:
-  VERSION: 0.0.1
+  VERSION: 0.1.0
+
+permissions:
+  actions: read
+  contents: read
 
 on:
   workflow_call:

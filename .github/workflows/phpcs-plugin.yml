@@ -11,9 +11,13 @@
 name: PHPCS - Plugin
 
 env:
-  VERSION: 0.0.6
+  VERSION: 0.0.7
   DIR: ${{ vars.DIR }}
   PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
+
+permissions:
+  actions: read
+  contents: read
 
 on:
   workflow_call:

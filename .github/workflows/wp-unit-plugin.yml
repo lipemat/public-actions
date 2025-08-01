@@ -22,7 +22,7 @@
 name: WP Unit - Plugin
 
 env:
-  VERSION: 1.4.1
+  VERSION: 1.4.2
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -30,6 +30,10 @@ env:
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
   WP_UNIT_VERSION: ${{ vars.WP_UNIT_VERSION }}
+
+permissions:
+  actions: read
+  contents: read
 
 on:
   workflow_call:

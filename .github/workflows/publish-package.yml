@@ -12,8 +12,12 @@
 name: Publish Node Package
 
 env:
-  VERSION: 0.0.1
+  VERSION: 0.1.0
   TZ: 'America/New_York'
+
+permissions:
+  actions: read
+  contents: read
 
 on:
   workflow_call:

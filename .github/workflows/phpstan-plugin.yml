@@ -22,7 +22,7 @@
 name: PHPStan - Plugin
 
 env:
-  VERSION: 0.0.7
+  VERSION: 0.0.8
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -31,6 +31,10 @@ env:
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   STUBS_VERSION: ${{ inputs.stubs }}
   TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
+
+permissions:
+  actions: read
+  contents: read
 
 on:
   workflow_call:
