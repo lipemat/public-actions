@@ -41,4 +41,4 @@ jobs:
           alwaysCache: 'true'
 
       - name: Run PHPCS
-        run: phpcs/vendor/bin/phpcs --standard=${{ env.DIR }}/phpcs.xml.dist  -q --report=checkstyle | cs2pr
+        run: phpcs/vendor/bin/phpcs --standard=$DIR/phpcs.xml.dist  -q --report=checkstyle | cs2pr

@@ -12,7 +12,7 @@
 # Token shared by all 4 plugins.
 # https://github.com/settings/personal-access-tokens/3757667
 #
-# @version 0.1.0
+# @version 0.1.1
 #
 ###################################################
 
@@ -24,13 +24,15 @@ runs:
   steps:
     - name: Determine Plugin refs
       id: determine-pro-ref
+      env:
+        HEAD_REF: ${{ github.head_ref }}
       run: |
-        if [[ "${{ env.DIR }}" == *"-pro"* ]]; then
-          echo "proRef=${{ github.head_ref }}" >> $GITHUB_ENV
-          echo "basicRef=${{ env.BASIC_BRANCH }}" >> $GITHUB_ENV
+        if [[ "$DIR" == *"-pro"* ]]; then
+          echo "proRef=$HEAD_REF" >> $GITHUB_ENV
+          echo "basicRef=$BASIC_BRANCH" >> $GITHUB_ENV
         else
-          echo "proRef=${{ env.PRO_BRANCH }}" >> $GITHUB_ENV
-          echo "basicRef=${{ github.head_ref }}" >> $GITHUB_ENV
+          echo "proRef=$PRO_BRANCH" >> $GITHUB_ENV
+          echo "basicRef=$HEAD_REF" >> $GITHUB_ENV
         fi
       shell: bash
 

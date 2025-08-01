@@ -4,7 +4,7 @@
 # inputs:
 #    dir: The directory of the plugin to build translations for.
 #
-# @version 1.0.1
+# @version 1.0.2
 #
 ###################################################
 
@@ -28,13 +28,17 @@ runs:
       uses: lipemat/public-actions/install-wp-cli@version/1
 
     - name: Generate JS translations
+      env:
+        DIR: ${{ inputs.dir }}
       run: |
-        cd ${{ inputs.dir }}/dev/translate-cli
+        cd "$DIR/dev/translate-cli"
         php command.php
       shell: bash
 
     - name: Generate PHP translations
+      env:
+        DIR: ${{ inputs.dir }}
       run: |
-        cd ${{ inputs.dir }}/languages
+        cd "$DIR/languages"
         wp i18n make-php .
       shell: bash

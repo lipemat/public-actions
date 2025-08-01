@@ -22,7 +22,7 @@
 name: WP Unit - Plugin
 
 env:
-  VERSION: 1.4.2
+  VERSION: 1.4.3
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -111,7 +111,7 @@ jobs:
           alwaysCache: 'true'
 
       - name: Add WP-Unit Config
-        run: cp public-actions/resources/plugins/config/wp-unit-local-config.php content/plugins/${{ env.PRO }}/dev/wp-unit/local-config.php
+        run: cp public-actions/resources/plugins/config/wp-unit-local-config.php "content/plugins/$PRO/dev/wp-unit/local-config.php"
 
       - name: Build PRO Translations
         uses: lipemat/public-actions/plugin-translations@version/1
@@ -140,7 +140,7 @@ jobs:
         env:
           MULTISITE: ${{ inputs.multisite }}
         run: |
-          php wp-unit/vendor/bin/phpunit --configuration content/plugins/${{ env.PRO }}/dev/wp-unit/phpunit-legacy.xml.dist --fail-on-warning
+          php wp-unit/vendor/bin/phpunit --configuration "content/plugins/$PRO/dev/wp-unit/phpunit-legacy.xml.dist" --fail-on-warning
         shell: bash
 
       - if: ${{ fromJSON(inputs.php) >= 8.1 }}
@@ -148,5 +148,5 @@ jobs:
         env:
           MULTISITE: ${{ inputs.multisite }}
         run: |
-          php wp-unit/vendor/bin/phpunit --configuration content/plugins/${{ env.PRO }}/dev/wp-unit/phpunit.xml.dist --fail-on-warning
+          php wp-unit/vendor/bin/phpunit --configuration "content/plugins/$PRO/dev/wp-unit/phpunit.xml.dist" --fail-on-warning
         shell: bash

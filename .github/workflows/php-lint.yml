@@ -6,7 +6,7 @@
 name: Lint PHP
 
 env:
-  VERSION: 0.1.0
+  VERSION: 0.1.1
 
 permissions:
   actions: read
@@ -32,4 +32,6 @@ jobs:
           php-version: ${{ inputs.php }}
 
       - name: Lint PHP
-        run: php -l -d ${{ github.workspace }}
+        env:
+          WORKSPACE: ${{ github.workspace }}
+        run: php -l -d "$WORKSPACE"

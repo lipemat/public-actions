@@ -16,7 +16,7 @@
 name: JS Unit - Plugin
 
 env:
-  VERSION: 0.2.1
+  VERSION: 0.2.2
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -54,12 +54,12 @@ jobs:
       - name: Validate JS Dist
         run: |
           export NODE_ENV=production
-          cd ${{ env.DIR }} && yarn dist
+          cd $DIR && yarn dist
         shell: bash
 
       - name: Validate CSS Modules
-        run: cd ${{ env.DIR }} && yarn lipemat-js-boilerplate validate-css-modules
+        run: cd $DIR && yarn lipemat-js-boilerplate validate-css-modules
 
       - name: Run JS Tests
-        run: cd ${{ env.DIR }} && yarn test
+        run: cd $DIR && yarn test
         shell: bash

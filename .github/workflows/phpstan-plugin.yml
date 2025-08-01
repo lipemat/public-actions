@@ -74,4 +74,4 @@ jobs:
 
       - name: Run PHPStan
         run: |
-          php phpstan/vendor/bin/phpstan analyze --configuration=${{ env.DIR }}/phpstan.neon.dist --memory-limit=2G --no-progress --error-format=checkstyle | cs2pr
+          php phpstan/vendor/bin/phpstan analyze --configuration=$DIR/phpstan.neon.dist --memory-limit=2G --no-progress --error-format=checkstyle | cs2pr

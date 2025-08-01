@@ -56,7 +56,7 @@ runs:
     - if: ${{ env.STUBS_VERSION != '' }}
       name: Install WordPress stubs as version ${{ env.STUBS_VERSION }}
       run: |
-        composer require --dev php-stubs/wordpress-stubs:${{ env.STUBS_VERSION }} --working-dir=phpstan
+        composer require --dev "php-stubs/wordpress-stubs:$STUBS_VERSION" --working-dir=phpstan
       shell: bash
 
     # Make required directory to support loading `..lipemat/actions/..lipemat/actions/..lipemat/actions/extensions.neon`.
