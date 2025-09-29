@@ -1,6 +1,6 @@
 ################################
 #
-# @version 6.2.1
+# @version 6.4.2
 #
 ################################
 
@@ -11,6 +11,7 @@
 
 # system/hidden files
 *.bak
+*.code-workspace
 *.sublime-project
 *.sublime-workspace
 *.swp
@@ -31,6 +32,7 @@
 .svn
 .vscode
 Thumbs.db
+apple-developer-merchantid-domain-association
 ehthumbs.db
 tsconfig.tsbuildinfo
 
@@ -66,6 +68,7 @@ node_modules
 
 # theme - compiled files
 wp-content/themes/core/js/dist
+wp-content/themes/core/js/dist-svelte
 wp-content/themes/core/_css-modules-json
 wp-content/themes/core/css/*.php
 wp-content/themes/core/css/dist
@@ -84,13 +87,12 @@ deploy
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
-.idea/csv-editor.xml
-.idea/csv-plugin.xml
-.idea/php.xml
-.idea/sshConfigs.xml
+# AWS User-specific
+.idea/**/aws.xml
 # Generated files
 .idea/**/contentModel.xml
 # Sensitive or high-churn files
+.idea/data_source_mapping.xml
 .idea/**/dataSources/
 .idea/**/dataSources.ids
 .idea/**/dataSources.local.xml
@@ -100,7 +102,15 @@ deploy
 .idea/**/dbnavigator.xml
 # JIRA plugin
 atlassian-ide-plugin.xml
-# Editor-based Rest Client
+# Editor-based HTTP Client
 .idea/httpRequests
+http-client.private.env.json
 # Copilot
 .idea/copilot
+.idea/copilotDiffState.xml
+.idea/copilot.data.migration.*
+# System configs
+.idea/csv-editor.xml
+.idea/csv-plugin.xml
+.idea/php.xml
+.idea/sshConfigs.xml
