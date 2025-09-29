@@ -3,7 +3,7 @@
 #
 # - Tests the service after installation.
 #
-# Version: 1.0.0
+# Version: 1.0.1
 #
 ###############################################
 
@@ -13,6 +13,10 @@ description: Install and test Memcache service
 runs:
   using: composite
   steps:
+    - name: Update apt cache
+      run: sudo apt update
+      shell: bash
+
     - name: Install Memcache
       run: sudo apt install -y memcached
       shell: bash
