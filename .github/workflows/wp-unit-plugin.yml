@@ -22,7 +22,7 @@
 name: WP Unit - Plugin
 
 env:
-  VERSION: 1.4.3
+  VERSION: 1.5.0
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -129,11 +129,17 @@ jobs:
           cd wp-unit
           composer require phpunit/phpunit:^9.6.20 --dev --no-scripts --with-dependencies
 
-      - if: ${{ fromJSON(inputs.php) >= 8.1 }}
+      - if: ${{ fromJSON(inputs.php) == 8.1 }}
         name: Checkout PHPUnit 10
         run: |
           cd wp-unit
-          composer require phpunit/phpunit:^10.5.46 --dev --no-scripts --with-dependencies          
+          composer require phpunit/phpunit:^10.5.46 --dev --no-scripts --with-dependencies     
+
+      - if: ${{ fromJSON(inputs.php) >= 8.2 }}
+        name: Checkout PHPUnit 11
+        run: |
+          cd wp-unit
+          composer require phpunit/phpunit:^11.5.33 --dev --no-scripts --with-dependencies          
 
       - if: ${{ fromJSON(inputs.php) < 8.1 }}
         name: Run WP-Unit Legacy
