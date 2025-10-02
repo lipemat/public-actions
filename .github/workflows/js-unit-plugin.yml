@@ -16,14 +16,13 @@
 name: JS Unit - Plugin
 
 env:
-  VERSION: 0.3.0
+  VERSION: 0.3.1
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
   NODE_VERSION: ${{ vars.NODE_VERSION }}
   PRO: ${{ vars.PRO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
-  TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
 
 permissions:
   actions: read
@@ -47,6 +46,8 @@ jobs:
       - if: ${{ endsWith(env.DIR, '-pro') }}
         name: Checkout the PRO and BASIC plugins
         uses: lipemat/public-actions/checkout-plugins@version/1
+        env:
+          TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
 
       - name: Setup Node
         uses: lipemat/public-actions/setup-node@version/1

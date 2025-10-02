@@ -22,7 +22,7 @@
 name: PHPStan - Plugin
 
 env:
-  VERSION: 0.1.0
+  VERSION: 0.1.1
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -30,7 +30,6 @@ env:
   PRO: ${{ vars.PRO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   STUBS_VERSION: ${{ inputs.stubs }}
-  TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
 
 permissions:
   actions: read
@@ -58,6 +57,8 @@ jobs:
     steps:
       - name: Checkout the PRO and BASIC plugins
         uses: lipemat/public-actions/checkout-plugins@version/1
+        env:
+          TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
 
       - name: Setup PHP
         uses: lipemat/public-actions/setup-php@version/1

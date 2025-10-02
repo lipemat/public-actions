@@ -22,13 +22,12 @@
 name: WP Unit - Plugin
 
 env:
-  VERSION: 1.6.0
+  VERSION: 1.6.1
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
   PRO: ${{ vars.PRO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
-  TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
   WP_UNIT_VERSION: ${{ vars.WP_UNIT_VERSION }}
 
 permissions:
@@ -74,6 +73,8 @@ jobs:
 
       - name: Checkout the PRO and BASIC plugins
         uses: lipemat/public-actions/checkout-plugins@version/1
+        env:
+          TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
 
       - name: Checkout the public-actions repository
         uses: actions/checkout@v4
