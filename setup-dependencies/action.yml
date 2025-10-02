@@ -3,6 +3,8 @@
 #
 # @version 2.1.0
 #
+# @deprecated in favor of combining setup-node and setup-php
+#
 ###################################################
 
 name: Setup Dependencies
@@ -11,22 +13,6 @@ description: Setup Node, Yarn, PHP, and ts-node
 runs:
   using: "composite"
   steps:
-    - name: Install Node
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{env.NODE_VERSION}}
-        registry-url: 'https://registry.npmjs.org'
+    - uses: lipemat/public-actions/setup-node@version/1
 
-    - name: Install yarn
-      shell: bash
-      run: corepack enable
-
-    - name: Install ts-node
-      shell: bash
-      run: npm install -g ts-node
-
-    - name: Install PHP
-      uses: shivammathur/setup-php@v2
-      with:
-        php-version: ${{env.PHP_VERSION}}
-        tools: cs2pr
+    - uses: lipemat/public-actions/setup-php@version/1

@@ -1,0 +1,29 @@
+###################################################
+# Local action to set up the action's environment.
+#
+# env:
+#   NODE_VERSION: Node version to install.
+#
+# @version 0.0.1
+#
+###################################################
+
+name: Setup Node
+description: Node, Yarn and ts-node
+
+runs:
+  using: "composite"
+  steps:
+    - name: Install Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{env.NODE_VERSION}}
+        registry-url: 'https://registry.npmjs.org'
+
+    - name: Install yarn
+      shell: bash
+      run: corepack enable
+
+    - name: Install ts-node
+      shell: bash
+      run: npm install -g ts-node

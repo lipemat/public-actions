@@ -1,0 +1,22 @@
+###################################################
+# Local action to set up the action's environment.
+#
+# env:
+#   PHP_VERSION: PHP version to install.
+#
+# @version 0.0.1
+#
+###################################################
+
+name: Setup PHP
+description: Install PHP on the server
+
+runs:
+  using: "composite"
+  steps:
+
+    - name: Install PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: ${{env.PHP_VERSION}}
+        tools: cs2pr
