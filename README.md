@@ -41,8 +41,8 @@ jobs:
     name: Populate all caches
     runs-on: ubuntu-24.04
     steps:
-      - name: Setup Node and PHP
-        uses: lipemat/public-actions/setup-dependencies@v1
+      - name: Setup PHP
+        uses: lipemat/public-actions/setup-php@v1
 ```
 
 ### Reusable Workflow

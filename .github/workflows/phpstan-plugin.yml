@@ -22,7 +22,7 @@
 name: PHPStan - Plugin
 
 env:
-  VERSION: 0.0.8
+  VERSION: 0.1.0
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -59,10 +59,9 @@ jobs:
       - name: Checkout the PRO and BASIC plugins
         uses: lipemat/public-actions/checkout-plugins@version/1
 
-      - name: Setup Node and PHP
-        uses: lipemat/public-actions/setup-dependencies@version/1
+      - name: Setup PHP
+        uses: lipemat/public-actions/setup-php@version/1
         env:
-          NODE_VERSION: ${{ env.NODE_VERSION }}
           PHP_VERSION: ${{ inputs.php }}
 
       - name: Install PHPStan

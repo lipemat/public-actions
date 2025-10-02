@@ -11,7 +11,7 @@
 name: PHPCS - Plugin
 
 env:
-  VERSION: 0.0.7
+  VERSION: 0.1.0
   DIR: ${{ vars.DIR }}
   PHPCS_VERSION: ${{ vars.PHPCS_VERSION }}
 
@@ -32,8 +32,8 @@ jobs:
         with:
           path: ${{ env.DIR }}
 
-      - name: Setup Node and PHP
-        uses: lipemat/public-actions/setup-dependencies@version/1
+      - name: Setup PHP
+        uses: lipemat/public-actions/setup-php@version/1
 
       - name: Install PHPCS
         uses: lipemat/public-actions/install-phpcs@version/1

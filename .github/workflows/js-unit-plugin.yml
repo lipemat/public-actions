@@ -16,7 +16,7 @@
 name: JS Unit - Plugin
 
 env:
-  VERSION: 0.2.2
+  VERSION: 0.3.0
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -48,8 +48,8 @@ jobs:
         name: Checkout the PRO and BASIC plugins
         uses: lipemat/public-actions/checkout-plugins@version/1
 
-      - name: Setup Node and PHP
-        uses: lipemat/public-actions/setup-dependencies@version/1
+      - name: Setup Node
+        uses: lipemat/public-actions/setup-node@version/1
 
       - name: Validate JS Dist
         run: |
