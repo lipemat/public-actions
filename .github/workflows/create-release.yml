@@ -13,23 +13,64 @@
 name: Create GitHub Release
 
 env:
-  VERSION: 0.1.1
+  VERSION: 0.2.0
 
 permissions:
   contents: write
+  models: read
 
 on:
   workflow_call:
 
 jobs:
   create-release:
-    name: Create release for ${{ github.ref_name }}
+    name: Create a release for ${{ github.ref_name }}
     runs-on: ubuntu-24.04
     steps:
+      - name: Checkout the files
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 200
+
+      - name: Fetch all tags
+        run: git fetch --tags --force
+
+      - name: Get previous tag
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          PREV_TAG=$(git describe --abbrev=0 --tags $TAG^)
+          echo "PREVIOUS_TAG=$PREV_TAG" >> $GITHUB_ENV
+
+      - name: Write Git log to a log.txt file
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          git log $PREVIOUS_TAG..$TAG > log.txt
+          cat log.txt
+
+      - name: Install gh-models extension
+        run: gh extension install https://github.com/github/gh-models
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Generate AI Notes for Release
+        id: ai-notes
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Generate a summary using the model by reading from file
+          cat log.txt | gh models run xai/grok-3-mini \
+            "Given the following git log information, generate a single, clear, and concise changelog entry that summarizes the main changes (features, fixes, or bugs) introduced by this Tag. Use neutral, user-facing language and avoid technical jargon or internal references. Write a single paragraph, with no additional introduction or explanation text." > summary.md
+
+          FORMATTED_LINE="$(cat summary.md)"
+          echo "content=$FORMATTED_LINE" >> $GITHUB_OUTPUT
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
           name: Version ${{ github.ref_name }}
           draft: false
+          body: ${{ steps.ai-notes.outputs.content }}
           generate_release_notes: true
           prerelease: false
