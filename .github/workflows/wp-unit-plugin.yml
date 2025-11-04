@@ -6,6 +6,7 @@
 #   BASIC: The basic plugin slug.
 #   BASIC_BRANCH: The branch of the basic plugin.
 #   DIR: The directory of the plugin.
+#   NODE_VERSION: The version of Node to install.
 #   PHP_VERSION: The PHP version to use for global actions which don't use the PHP_VERSION input.
 #   PRO: The pro plugin slug.
 #   PRO_BRANCH: The branch of the pro plugin.
@@ -22,10 +23,11 @@
 name: WP Unit - Plugin
 
 env:
-  VERSION: 1.6.2
+  VERSION: 1.7.0
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
+  NODE_VERSION: ${{ vars.NODE_VERSION }}
   PRO: ${{ vars.PRO }}
   PRO_BRANCH: ${{ vars.PRO_BRANCH }}
   WP_UNIT_VERSION: ${{ vars.WP_UNIT_VERSION }}
@@ -86,7 +88,7 @@ jobs:
       - name: Setup Node
         uses: lipemat/public-actions/setup-node@version/1
         env:
-          NODE_VERSION: 20.11.0
+          NODE_VERSION: ${{ env.NODE_VERSION }}
 
       - name: Setup PHP
         uses: lipemat/public-actions/setup-php@version/1
