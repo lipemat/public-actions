@@ -22,7 +22,7 @@
 name: WP Unit - Plugin
 
 env:
-  VERSION: 1.6.1
+  VERSION: 1.6.2
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -87,6 +87,11 @@ jobs:
         uses: lipemat/public-actions/setup-node@version/1
         env:
           NODE_VERSION: 20.11.0
+
+      - name: Setup PHP
+        uses: lipemat/public-actions/setup-php@version/1
+        env:
+          PHP_VERSION: ${{ inputs.php }}
 
       - name: Install Memcached Service
         uses: lipemat/public-actions/memcache-service@version/1
