@@ -7,6 +7,8 @@
 # 1. Select your publisher: GitHub Actions
 # 2. Publishing access: Require two-factor authentication and disallow tokens.
 #
+# @requires Node version >= 22.21.1
+#
 # inputs:
 #   beta: Run the workflow for beta releases.
 #   nodeVersion: The version of Node to install.
@@ -50,7 +52,12 @@ jobs:
       - name: Setup Node
         uses: lipemat/public-actions/setup-node@version/1
         env:
-          NODE_VERSION: '24'
+          NODE_VERSION: ${{ inputs.nodeVersion }}
+
+      - name: Upgrade npm for Trusted Publishing
+        shell: bash
+        # Minium required version is 11.5.1
+        run: npm i -g npm@^11.5.1
 
       - if: ${{ inputs.withInstall }}
         name: Install node modules
