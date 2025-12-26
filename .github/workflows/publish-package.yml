@@ -63,4 +63,4 @@ jobs:
 
       - if: ${{ inputs.beta == true}}
         name: Publish Beta to NPM
-        run: npm publish --tag beta
+        run: npm publish --tag beta --access public
