@@ -55,7 +55,7 @@ jobs:
       - if: ${{ inputs.withInstall }}
         name: Install node modules
         shell: bash
-        run: yarn install
+        run: yarn install --frozen-lockfile
 
       - if: ${{ inputs.beta == false}}
         name: Publish to NPM
