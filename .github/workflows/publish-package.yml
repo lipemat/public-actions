@@ -50,7 +50,7 @@ jobs:
       - name: Setup Node
         uses: lipemat/public-actions/setup-node@version/1
         env:
-          NODE_VERSION: ${{ inputs.node_version }}
+          NODE_VERSION: ${{ inputs.nodeVersion }}
 
       - if: ${{ inputs.withInstall }}
         name: Install node modules
