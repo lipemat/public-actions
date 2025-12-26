@@ -23,6 +23,7 @@ env:
 permissions:
   actions: read
   contents: read
+  id-token: write  # Required for OIDC
 
 on:
   workflow_call:
