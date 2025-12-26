@@ -1,18 +1,23 @@
 ###################################################
 # A reusable workflow for publishing a Node package.
 #
+# The preferred method of authentication is to use Trusted Publisher in NPM.js settings.
+# @link https://docs.npmjs.com/trusted-publishers
+#
+# 1. Select your publisher: GitHub Actions
+# 2. Publishing access: Require two-factor authentication and disallow tokens.
+#
 # inputs:
 #   beta: Run the workflow for beta releases.
 #   nodeVersion: The version of Node to install.
 #   withInstall: Run `yarn install` before publishing.
-# secrets:
-#   NPM_TOKEN: From "Access Tokens" settings in NPM profile (or CRM stored one).
+#
 #
 ###################################################
 name: Publish Node Package
 
 env:
-  VERSION: 0.2.0
+  VERSION: 1.0.0
   TZ: 'America/New_York'
 
 permissions:
@@ -54,11 +59,7 @@ jobs:
       - if: ${{ inputs.beta == false}}
         name: Publish to NPM
         run: npm publish --access public
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
 
       - if: ${{ inputs.beta == true}}
         name: Publish Beta to NPM
         run: npm publish --tag beta
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
