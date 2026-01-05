@@ -147,7 +147,7 @@ jobs:
         env:
           MULTISITE: ${{ inputs.multisite }}
         run: |
-          php wp-unit/vendor/bin/phpunit --configuration "content/plugins/$PRO/dev/wp-unit/phpunit-legacy.xml.dist" --fail-on-warning
+          php wp-unit/vendor/bin/phpunit --configuration "content/plugins/$PRO/dev/wp-unit/phpunit-legacy.xml.dist" --fail-on-warning --testdox
         shell: bash
 
       - if: ${{ fromJSON(inputs.php) >= 8.2 }}
@@ -155,5 +155,5 @@ jobs:
         env:
           MULTISITE: ${{ inputs.multisite }}
         run: |
-          php wp-unit/vendor/bin/phpunit --configuration "content/plugins/$PRO/dev/wp-unit/phpunit.xml.dist" --fail-on-warning
+          php wp-unit/vendor/bin/phpunit --configuration "content/plugins/$PRO/dev/wp-unit/phpunit.xml.dist" --fail-on-warning --testdox
         shell: bash
