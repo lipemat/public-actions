@@ -108,6 +108,10 @@ jobs:
         run: |
           unzip -p public-actions/resources/plugins/config/wp-unit.sql.zip | mysql -u root -proot wp-unit
 
+      - if: ${{ hashFiles('content/plugins/$PRO/.github/config/wp-unit.sql.zip') != '' }}
+        name: Import MySQL Dump
+        run: unzip -p content/plugins/$PRO/.github/config/wp-unit.sql.zip | mysql -u root -proot wp-unit
+
       - name: Add object-cache file to wp-content
         run: |
           cp public-actions/resources/plugins/object-cache.php content/object-cache.php
