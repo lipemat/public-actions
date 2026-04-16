@@ -47,11 +47,6 @@ on:
         description: The PHP version to use.
         required: true
         type: string
-      skipDatabaseInstall:
-        description: Skip the wp-unit install of database step in favor of importing the dump.
-        required: false
-        type: boolean
-        default: true
       wp:
         description: The version of WordPress to test.
         required: true
