@@ -103,12 +103,7 @@ jobs:
           sudo /etc/init.d/mysql start
           mysql -e 'CREATE DATABASE `wp-unit`;' -u root -proot    
 
-      - if: ${{ inputs.skipDatabaseInstall == true }}
-        name: Import MySQL Dump
-        run: |
-          unzip -p public-actions/resources/plugins/config/wp-unit.sql.zip | mysql -u root -proot wp-unit
-
-      - if: ${{ hashFiles('content/plugins/$PRO/.github/config/wp-unit.sql.zip') != '' }}
+      - if: ${{ hashFiles( format('content/plugins/{0}/.github/config/wp-unit.sql.zip', env.PRO )) != '' }}
         name: Import MySQL Dump
         run: unzip -p content/plugins/$PRO/.github/config/wp-unit.sql.zip | mysql -u root -proot wp-unit
 
