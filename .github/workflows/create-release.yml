@@ -13,7 +13,7 @@
 name: Create GitHub Release
 
 env:
-  VERSION: 0.2.0
+  VERSION: 0.3.0
 
 permissions:
   contents: write
@@ -60,7 +60,7 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           # Generate a summary using the model by reading from file
-          cat log.txt | gh models run xai/grok-3-mini \
+          cat log.txt | gh models run openai/gpt-4.1-mini \
             "Given the following git log information, generate a single, clear, and concise changelog entry that summarizes the main changes (features, fixes, or bugs) introduced by this Tag. Use neutral, user-facing language and avoid technical jargon or internal references. Write a single paragraph, with no additional introduction or explanation text." > summary.md
 
           FORMATTED_LINE="$(cat summary.md)"
