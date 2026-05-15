@@ -13,6 +13,6 @@ description: Setup Node, Yarn, PHP, and ts-node
 runs:
   using: "composite"
   steps:
-    - uses: lipemat/public-actions/setup-node@version/1
+    - uses: lipemat/public-actions/setup-node@version/2
 
-    - uses: lipemat/public-actions/setup-php@version/1
+    - uses: lipemat/public-actions/setup-php@version/2

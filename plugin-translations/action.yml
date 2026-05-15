@@ -4,7 +4,7 @@
 # inputs:
 #    dir: The directory of the plugin to build translations for.
 #
-# @version 1.0.2
+# @version 1.1.0
 #
 ###################################################
 
@@ -20,12 +20,12 @@ runs:
   using: "composite"
   steps:
     - name: Install Translations Dependencies
-      uses: lipemat/public-actions/install-translate@version/1
+      uses: lipemat/public-actions/install-translate@version/2
       with:
         dir: ${{ inputs.dir }}
 
     - name: Install WP-CLI
-      uses: lipemat/public-actions/install-wp-cli@version/1
+      uses: lipemat/public-actions/install-wp-cli@version/2
 
     - name: Generate JS translations
       env:

@@ -44,15 +44,15 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup PHP
-        uses: lipemat/public-actions/setup-php@version/1
+        uses: lipemat/public-actions/setup-php@version/2
 
       - name: Populate WP-Unit Cache
-        uses: lipemat/public-actions/install-wp-unit@version/1
+        uses: lipemat/public-actions/install-wp-unit@version/2
 
       - name: Populate PHPCS Cache
-        uses: lipemat/public-actions/install-phpcs@version/1
+        uses: lipemat/public-actions/install-phpcs@version/2
 
       - name: Populate Translations Composer Cache
-        uses: lipemat/public-actions/install-translate@version/1
+        uses: lipemat/public-actions/install-translate@version/2
         with:
           dir: .

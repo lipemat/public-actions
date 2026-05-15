@@ -45,12 +45,12 @@ jobs:
 
       - if: ${{ endsWith(env.DIR, '-pro') }}
         name: Checkout the PRO and BASIC plugins
-        uses: lipemat/public-actions/checkout-plugins@version/1
+        uses: lipemat/public-actions/checkout-plugins@version/2
         env:
           TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
 
       - name: Setup Node
-        uses: lipemat/public-actions/setup-node@version/1
+        uses: lipemat/public-actions/setup-node@version/2
 
       - name: Validate JS Dist
         run: |

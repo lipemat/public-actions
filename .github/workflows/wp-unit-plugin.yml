@@ -69,7 +69,7 @@ jobs:
           cp -r wp/wp-content/themes/twentytwentythree content/themes/twentytwentythree
 
       - name: Checkout the PRO and BASIC plugins
-        uses: lipemat/public-actions/checkout-plugins@version/1
+        uses: lipemat/public-actions/checkout-plugins@version/2
         env:
           TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
 
@@ -81,17 +81,17 @@ jobs:
           ref: version/1
 
       - name: Setup Node
-        uses: lipemat/public-actions/setup-node@version/1
+        uses: lipemat/public-actions/setup-node@version/2
         env:
           NODE_VERSION: ${{ env.NODE_VERSION }}
 
       - name: Setup PHP
-        uses: lipemat/public-actions/setup-php@version/1
+        uses: lipemat/public-actions/setup-php@version/2
         env:
           PHP_VERSION: ${{ inputs.php }}
 
       - name: Install Memcached Service
-        uses: lipemat/public-actions/memcache-service@version/1
+        uses: lipemat/public-actions/memcache-service@version/2
 
       - name: Set up MySQL
         run: |
@@ -107,7 +107,7 @@ jobs:
           cp public-actions/resources/plugins/object-cache.php content/object-cache.php
 
       - name: Install WP-Unit
-        uses: lipemat/public-actions/install-wp-unit@version/1
+        uses: lipemat/public-actions/install-wp-unit@version/2
         with:
           alwaysCache: 'true'
 
@@ -115,12 +115,12 @@ jobs:
         run: cp public-actions/resources/plugins/config/wp-unit-local-config.php "content/plugins/$PRO/dev/wp-unit/local-config.php"
 
       - name: Build PRO Translations
-        uses: lipemat/public-actions/plugin-translations@version/1
+        uses: lipemat/public-actions/plugin-translations@version/2
         with:
           dir: content/plugins/${{ env.PRO }}
 
       - name: Build BASIC Translations
-        uses: lipemat/public-actions/plugin-translations@version/1
+        uses: lipemat/public-actions/plugin-translations@version/2
         with:
           dir: content/plugins/${{ env.BASIC }}
 

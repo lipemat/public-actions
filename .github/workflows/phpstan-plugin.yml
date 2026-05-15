@@ -56,17 +56,17 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout the PRO and BASIC plugins
-        uses: lipemat/public-actions/checkout-plugins@version/1
+        uses: lipemat/public-actions/checkout-plugins@version/2
         env:
           TOKEN: ${{ secrets.PUBLIC_ACTIONS_PRO_REPO }}
 
       - name: Setup PHP
-        uses: lipemat/public-actions/setup-php@version/1
+        uses: lipemat/public-actions/setup-php@version/2
         env:
           PHP_VERSION: ${{ inputs.php }}
 
       - name: Install PHPStan
-        uses: lipemat/public-actions/install-phpstan@version/1
+        uses: lipemat/public-actions/install-phpstan@version/2
         env:
           PHPSTAN_VERSION: ${{ inputs.phpstan-version }}
         with:

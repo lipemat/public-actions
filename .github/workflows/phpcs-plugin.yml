@@ -33,10 +33,10 @@ jobs:
           path: ${{ env.DIR }}
 
       - name: Setup PHP
-        uses: lipemat/public-actions/setup-php@version/1
+        uses: lipemat/public-actions/setup-php@version/2
 
       - name: Install PHPCS
-        uses: lipemat/public-actions/install-phpcs@version/1
+        uses: lipemat/public-actions/install-phpcs@version/2
         with:
           alwaysCache: 'true'
 
