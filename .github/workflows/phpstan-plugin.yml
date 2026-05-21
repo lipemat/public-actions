@@ -68,7 +68,7 @@ jobs:
       - name: Install PHPStan
         uses: lipemat/public-actions/install-phpstan@version/2
         env:
-          PHPSTAN_VERSION: ${{ inputs.phpstan-version }}
+          PHPSTAN_VERSION: ${{ inputs.phpstan-version != '' && inputs.phpstan-version || vars.PHPSTAN_VERSION }}
         with:
           alwaysCache: 'true'
 
