@@ -13,7 +13,7 @@
 name: Create GitHub Release
 
 env:
-  VERSION: 0.3.3
+  VERSION: 0.3.4
 
 permissions:
   contents: write
@@ -67,7 +67,7 @@ jobs:
           echo "content=$FORMATTED_LINE" >> $GITHUB_OUTPUT
 
       - name: Create Release
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v3
         with:
           name: Version ${{ github.ref_name }}
           draft: false
