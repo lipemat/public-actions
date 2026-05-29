@@ -13,7 +13,7 @@
 name: Create GitHub Release
 
 env:
-  VERSION: 0.3.2
+  VERSION: 0.3.3
 
 permissions:
   contents: write
@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout the files
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           fetch-depth: 200
 
