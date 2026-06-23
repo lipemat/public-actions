@@ -36,3 +36,7 @@ runs:
         DIR: ${{ inputs.dir }}
       run: composer install --working-dir "$DIR/dev/translate-cli" --no-plugins --no-scripts --prefer-dist
       shell: bash
+
+    - name: Audit composer dependencies
+      run: composer audit --locked --working-dir "$DIR/dev/translate-cli"
+      shell: bash

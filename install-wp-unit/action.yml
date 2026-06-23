@@ -48,7 +48,11 @@ runs:
 
     - if: ${{ steps.restore-wp-unit.outputs.cache-hit != 'true' }}
       name: Install WP-Unit Dependencies
-      run: composer install --working-dir wp-unit --no-scripts
+      run: composer install --working-dir=wp-unit --no-scripts
+      shell: bash
+
+    - name: Audit composer dependencies
+      run: composer audit --locked --working-dir=wp-unit
       shell: bash
 
     # Only save the cache on the master branch.

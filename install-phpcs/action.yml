@@ -51,6 +51,10 @@ runs:
       run: composer install --working-dir=phpcs
       shell: bash
 
+    - name: Audit composer dependencies
+      run: composer audit --locked --working-dir=phpcs
+      shell: bash
+
     # Only save the cache on the master branch.
     - if: ${{ steps.restore-phpcs.outputs.cache-hit != 'true' && ( github.ref == 'refs/heads/master' || inputs.alwaysCache == 'true' ) }}
       name: Save PHPCS to Cache

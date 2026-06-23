@@ -53,6 +53,10 @@ runs:
       run: composer install --working-dir=phpstan
       shell: bash
 
+    - name: Audit composer dependencies
+      run: composer audit --locked --working-dir=phpstan
+      shell: bash
+
     - if: ${{ env.STUBS_VERSION != '' }}
       name: Install WordPress stubs as version ${{ env.STUBS_VERSION }}
       run: |
