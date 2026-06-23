@@ -4,7 +4,7 @@
 # env:
 #   PHP_VERSION: PHP version to install.
 #
-# @version 0.0.1
+# @version 0.0.2
 #
 ###################################################
 
@@ -16,7 +16,7 @@ runs:
   steps:
 
     - name: Install PHP
-      uses: shivammathur/setup-php@v2
+      uses: shivammathur/setup-php@2.37.2
       with:
         php-version: ${{env.PHP_VERSION}}
         tools: cs2pr
