@@ -13,7 +13,7 @@
 name: Create GitHub Release
 
 env:
-  VERSION: 0.3.5
+  VERSION: 0.4.0
 
 permissions:
   contents: write
@@ -49,22 +49,48 @@ jobs:
           git log $PREVIOUS_TAG..$TAG > log.txt
           cat log.txt
 
-      - name: Install gh-models extension
-        run: gh extension install https://github.com/github/gh-models
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Generate AI Notes for Release
         id: ai-notes
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Generate a summary using the model by reading from file
-          cat log.txt | gh models run openai/gpt-5 \
-            "Given the following git log information, generate a single, clear, and concise changelog entry that summarizes the main changes (features, fixes, or bugs) introduced by this Tag. Use neutral, user-facing language and avoid technical jargon or internal references. Write a single paragraph, with no additional introduction or explanation text. Do not mention any version bumps." > summary.md
+          PROMPT="Given the following git log information, generate a single, clear, and concise changelog entry that summarizes the main changes (features, fixes, or bugs) introduced by this Tag. Use neutral, user-facing language and avoid technical jargon or internal references. Write a single paragraph, with no additional introduction or explanation text. Do not mention any version bumps."
 
-          FORMATTED_LINE="$(cat summary.md)"
-          echo "content=$FORMATTED_LINE" >> $GITHUB_OUTPUT
+          RESPONSE="$(jq -n \
+            --arg model 'openai/gpt-5' \
+            --arg prompt "$PROMPT" \
+            --arg git_log "$(cat log.txt)" \
+            '{
+              model: $model,
+              messages: [
+                {
+                  role: "user",
+                  content: ($prompt + "\n\nGit log:\n" + $git_log)
+                }
+              ],
+              temperature: 0.2
+            }' \
+            | curl --fail --silent --show-error \
+              -X POST \
+              -H "Authorization: Bearer $GH_TOKEN" \
+              -H 'Content-Type: application/json' \
+              --data @- \
+              'https://models.inference.ai.azure.com/chat/completions')"
+
+          SUMMARY="$(echo "$RESPONSE" | jq -r '.choices[0].message.content // empty')"
+
+          if [ -z "$SUMMARY" ]; then
+            echo 'Failed to generate release notes from GitHub Models response.' >&2
+            echo "$RESPONSE" >&2
+            exit 1
+          fi
+
+          printf '%s\n' "$SUMMARY" > summary.md
+          {
+            echo 'content<<EOF'
+            cat summary.md
+            echo 'EOF'
+          } >> "$GITHUB_OUTPUT"
 
       - name: Create Release
         uses: softprops/action-gh-release@v3
