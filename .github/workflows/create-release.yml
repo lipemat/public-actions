@@ -8,19 +8,26 @@
 # 4. Workflow permissions
 # 5. Enable "read and write permissions".
 #
+# secrets:
+#   COPILOT_GITHUB_TOKEN: Optional PAT with Copilot access used to
+#     summarize the git log into the release body. Without it, the
+#     release falls back to GitHub's auto-generated notes.
+#
 ###################################################
 
 name: Create GitHub Release
 
 env:
-  VERSION: 0.3.5
+  VERSION: 0.4.1
 
 permissions:
   contents: write
-  models: read
 
 on:
   workflow_call:
+    secrets:
+      COPILOT_GITHUB_TOKEN:
+        required: false
 
 jobs:
   create-release:
@@ -49,28 +56,52 @@ jobs:
           git log $PREVIOUS_TAG..$TAG > log.txt
           cat log.txt
 
-      - name: Install gh-models extension
-        run: gh extension install https://github.com/github/gh-models
+      - name: Determine if a Copilot token is available
+        id: copilot-token
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
+        run: |
+          if [ -n "$COPILOT_GITHUB_TOKEN" ]; then
+            echo "available=true" >> $GITHUB_OUTPUT
+          else
+            echo "available=false" >> $GITHUB_OUTPUT
+            echo "::notice::No COPILOT_GITHUB_TOKEN secret; using auto-generated release notes."
+          fi
+
+      - name: Build the prompt
+        if: ${{ 'true' == steps.copilot-token.outputs.available }}
+        run: |
+          {
+            echo "Given the following git log information, generate a single, clear, and concise changelog entry that summarizes the main changes (features, fixes, or bugs) introduced by this Tag. Use neutral, user-facing language and avoid technical jargon or internal references. Write a single paragraph, with no additional introduction or explanation text. Do not mention any version bumps."
+            echo
+            cat log.txt
+          } > prompt.txt
+
+      - name: Install Node
+        if: ${{ 'true' == steps.copilot-token.outputs.available }}
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Install the Copilot CLI
+        if: ${{ 'true' == steps.copilot-token.outputs.available }}
+        run: npm install -g @github/copilot
 
       - name: Generate AI Notes for Release
         id: ai-notes
+        if: ${{ 'true' == steps.copilot-token.outputs.available }}
+        uses: actions/ai-inference@v3
+        with:
+          model: auto
+          prompt-file: prompt.txt
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # Generate a summary using the model by reading from file
-          cat log.txt | gh models run openai/gpt-5 \
-            "Given the following git log information, generate a single, clear, and concise changelog entry that summarizes the main changes (features, fixes, or bugs) introduced by this Tag. Use neutral, user-facing language and avoid technical jargon or internal references. Write a single paragraph, with no additional introduction or explanation text. Do not mention any version bumps." > summary.md
-
-          FORMATTED_LINE="$(cat summary.md)"
-          echo "content=$FORMATTED_LINE" >> $GITHUB_OUTPUT
+          COPILOT_GITHUB_TOKEN: ${{ secrets.COPILOT_GITHUB_TOKEN }}
 
       - name: Create Release
         uses: softprops/action-gh-release@v3
         with:
           name: Version ${{ github.ref_name }}
           draft: false
-          body: ${{ steps.ai-notes.outputs.content }}
+          body: ${{ steps.ai-notes.outputs.response }}
           generate_release_notes: true
           prerelease: false
