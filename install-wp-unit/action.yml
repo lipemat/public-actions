@@ -12,7 +12,9 @@
 #   alwaysCache: Optionally always cache the WP-Unit dependencies regardless
 #                of the branch.
 #
-# @version 0.2.0
+# Caches are separated by PHP minor version of the installed `php` binary.
+#
+# @version 0.3.0
 #
 ###################################################
 
@@ -28,6 +30,11 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Detect PHP Minor Version
+      id: php-version
+      run: echo "minor=$(php -r 'echo PHP_MAJOR_VERSION . "." . PHP_MINOR_VERSION;')" >> "$GITHUB_OUTPUT"
+      shell: bash
+
     - name: Restore WP-Unit from Cache
       uses: actions/cache/restore@v4
       id: restore-wp-unit
@@ -35,7 +42,7 @@ runs:
         path: |
           wp-unit
           dev/wp-unit/.phpunit.cache
-        key: wp-unit-${{ env.WP_UNIT_VERSION }}
+        key: wp-unit-${{ env.WP_UNIT_VERSION }}-php-${{ steps.php-version.outputs.minor }}
 
     - if: ${{ steps.restore-wp-unit.outputs.cache-hit != 'true' }}
       name: Install WP-Unit
