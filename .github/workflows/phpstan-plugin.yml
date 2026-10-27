@@ -22,7 +22,7 @@
 name: PHPStan - Plugin
 
 env:
-  VERSION: 0.1.1
+  VERSION: 0.1.2
   BASIC: ${{ vars.BASIC }}
   BASIC_BRANCH: ${{ vars.BASIC_BRANCH }}
   DIR: ${{ vars.DIR }}
@@ -71,7 +71,8 @@ jobs:
           PHPSTAN_VERSION: ${{ inputs.phpstan-version != '' && inputs.phpstan-version || vars.PHPSTAN_VERSION }}
         with:
           alwaysCache: 'true'
-
+          # roave/security-advisories blocks any version below PHP 8.2.35
+          composer-flags: ${{ contains(fromJSON('["7.4","8.0","8.1"]'), inputs.php) && '--ignore-platform-req=php' || '' }}
       - name: Run PHPStan
         run: |
           php phpstan/vendor/bin/phpstan analyze --configuration=$DIR/phpstan.neon.dist --memory-limit=2G --no-progress --error-format=checkstyle | cs2pr

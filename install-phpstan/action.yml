@@ -13,8 +13,9 @@
 # inputs:
 #   alwaysCache: Optionally always cache the PHPStan dependencies regardless
 #                of the branch.
+#   composer-flags: Optional flags to pass to composer install.
 #
-# @version 0.5.0
+# @version 0.6.0
 #
 ###################################################
 
@@ -26,6 +27,10 @@ inputs:
     description: Always cache the PHPStan dependencies regardless of the branch.
     required: false
     default: 'false'
+  composer-flags:
+    description: Flags to pass to Composer
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -50,7 +55,9 @@ runs:
 
     - if: ${{ steps.restore-phpstan.outputs.cache-hit != 'true' }}
       name: Install PHPStan Dependencies
-      run: composer install --working-dir=phpstan
+      env:
+        FLAGS: ${{ inputs.composer-flags }}
+      run: composer install --working-dir=phpstan $FLAGS
       shell: bash
 
     - name: Audit composer dependencies
@@ -59,8 +66,10 @@ runs:
 
     - if: ${{ env.STUBS_VERSION != '' }}
       name: Install WordPress stubs as version ${{ env.STUBS_VERSION }}
+      env:
+        FLAGS: ${{ inputs.composer-flags }}
       run: |
-        composer require --dev "php-stubs/wordpress-stubs:$STUBS_VERSION" --working-dir=phpstan
+        composer require --dev "php-stubs/wordpress-stubs:$STUBS_VERSION" --working-dir=phpstan $FLAGS
       shell: bash
 
     # Make required directory to support loading `..lipemat/actions/..lipemat/actions/..lipemat/actions/extensions.neon`.
